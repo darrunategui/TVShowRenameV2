@@ -54,6 +54,7 @@
     <Compile Include="Forms\MainForm.Designer.cs">
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controllers\OutputFormatController.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Controllers\SavedTVShowsController.cs" />
@@ -85,9 +86,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\TVDBDLL.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\DropImage.png" />
   </ItemGroup>
   <ItemGroup>
@@ -95,6 +93,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\TVShowRename.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\TVDBDLL.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

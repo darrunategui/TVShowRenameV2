@@ -279,7 +279,24 @@ namespace TVShowRename
             {
                 fileLocation += absolutPathTokens[i] + "\\";
             }
-            return fileLocation + tvShowName + " " + episodeInfo + " - " + episodeTitle + "." + fileExtension;
+            return fileLocation + getFileOutputFormat(tvShowName, episodeInfo, episodeTitle) + "." + fileExtension;
+        }
+
+        /// <summary>
+        /// returns the renamed file according to the specified output format
+        /// </summary>
+        private String getFileOutputFormat(String tvShowName, String episodeInfo, String episodeTitle)
+        {
+            String tvsOutputFormat = ivMainForm.outputTemplateTextBox.Text;
+            if (tvsOutputFormat == String.Empty)
+            {
+                return tvShowName + " " + episodeInfo + " - " + episodeTitle;
+            }
+            tvsOutputFormat = tvsOutputFormat.Replace("{TVShow}", tvShowName);
+            tvsOutputFormat = tvsOutputFormat.Replace("{S}", episodeInfo.Substring(1, 2));
+            tvsOutputFormat = tvsOutputFormat.Replace("{E}", episodeInfo.Substring(4, 2));
+            tvsOutputFormat = tvsOutputFormat.Replace("{Title}", episodeTitle);
+            return tvsOutputFormat;
         }
 
         /// <summary>

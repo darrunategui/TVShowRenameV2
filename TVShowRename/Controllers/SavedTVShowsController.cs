@@ -44,7 +44,7 @@ namespace TVShowRename
                 ivXmlDocument.Load(ivsSavedTVShowsFilename);
             }
             // If the file doesnt exists, create a new one
-            catch (System.IO.FileNotFoundException e)
+            catch (System.IO.FileNotFoundException)
             {
                 ivXmlDocument.AppendChild(ivXmlDocument.CreateXmlDeclaration("1.0", "utf-8", null));
                 ivXmlDocument.AppendChild(ivXmlDocument.CreateElement("root"));
@@ -88,7 +88,7 @@ namespace TVShowRename
                 ivXmlDocument.Load(ivsSavedTVShowsFilename);
             }
             // If the file doesn't exist, return -1 (error)
-            catch (System.IO.FileNotFoundException e)
+            catch (System.IO.FileNotFoundException)
             {
                 return -1;
             }
