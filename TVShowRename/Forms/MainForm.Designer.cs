@@ -41,7 +41,7 @@
             this.outputTemplateTextBox = new System.Windows.Forms.TextBox();
             this.outputTemplateLabel = new System.Windows.Forms.Label();
             this.advancedOptionsButton = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.advancedOptionsLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dropImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -81,6 +81,8 @@
             // 
             // showPossibilities
             // 
+            this.showPossibilities.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.showPossibilities.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.nameColumn,
             this.networkColumn,
@@ -88,7 +90,7 @@
             this.showPossibilities.Location = new System.Drawing.Point(12, 135);
             this.showPossibilities.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.showPossibilities.Name = "showPossibilities";
-            this.showPossibilities.Size = new System.Drawing.Size(762, 566);
+            this.showPossibilities.Size = new System.Drawing.Size(763, 566);
             this.showPossibilities.TabIndex = 3;
             this.showPossibilities.UseCompatibleStateImageBehavior = false;
             this.showPossibilities.View = System.Windows.Forms.View.Details;
@@ -139,7 +141,8 @@
             // 
             // advancedOptionsButton
             // 
-            this.advancedOptionsButton.Location = new System.Drawing.Point(738, 660);
+            this.advancedOptionsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.advancedOptionsButton.Location = new System.Drawing.Point(739, 661);
             this.advancedOptionsButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.advancedOptionsButton.Name = "advancedOptionsButton";
             this.advancedOptionsButton.Size = new System.Drawing.Size(36, 40);
@@ -148,22 +151,23 @@
             this.advancedOptionsButton.UseVisualStyleBackColor = true;
             this.advancedOptionsButton.Click += new System.EventHandler(this.advancedOptionsButtonClick);
             // 
-            // label1
+            // advancedOptionsLabel
             // 
-            this.label1.Location = new System.Drawing.Point(522, 660);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(213, 40);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Advanced Options...";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.advancedOptionsLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.advancedOptionsLabel.Location = new System.Drawing.Point(524, 661);
+            this.advancedOptionsLabel.Name = "advancedOptionsLabel";
+            this.advancedOptionsLabel.Size = new System.Drawing.Size(213, 40);
+            this.advancedOptionsLabel.TabIndex = 7;
+            this.advancedOptionsLabel.Text = "Advanced Options...";
+            this.advancedOptionsLabel.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // MainForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(786, 791);
-            this.Controls.Add(this.label1);
+            this.ClientSize = new System.Drawing.Size(788, 812);
+            this.Controls.Add(this.advancedOptionsLabel);
             this.Controls.Add(this.advancedOptionsButton);
             this.Controls.Add(this.outputTemplateLabel);
             this.Controls.Add(this.outputTemplateTextBox);
@@ -198,7 +202,7 @@
         public System.Windows.Forms.TextBox outputTemplateTextBox;
         public System.Windows.Forms.Label outputTemplateLabel;
         public System.Windows.Forms.Button advancedOptionsButton;
-        private System.Windows.Forms.Label label1;
+        public System.Windows.Forms.Label advancedOptionsLabel;
 
     }
 }

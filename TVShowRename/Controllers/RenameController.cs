@@ -342,6 +342,8 @@ namespace TVShowRename
             ivMainForm.showPossibilitiesLabel.Visible = controlVisibility;
             ivMainForm.dragTVShowLabel.Visible = !controlVisibility;
             ivMainForm.dropImage.Visible = !controlVisibility;
+            ivMainForm.advancedOptionsButton.Visible = !controlVisibility;
+            ivMainForm.advancedOptionsLabel.Visible = !controlVisibility;
         }
 
         /// <summary>
