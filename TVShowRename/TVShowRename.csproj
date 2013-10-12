@@ -129,7 +129,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Visual Studio 2010\TVDBDLL_SRC_0.5\TVDBDLL\TVDBDLL.csproj">
+    <ProjectReference Include="..\TVDBDLL\TVDBDLL.csproj">
       <Project>{5df5e740-df96-413d-b615-b3ff30f780b1}</Project>
       <Name>TVDBDLL</Name>
     </ProjectReference>
