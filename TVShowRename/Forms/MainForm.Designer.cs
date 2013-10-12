@@ -73,7 +73,7 @@
             this.dropImage.BackgroundImage = global::TVShowRename.Properties.Resources.DropImage;
             this.dropImage.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.dropImage.Location = new System.Drawing.Point(188, 135);
-            this.dropImage.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dropImage.Margin = new System.Windows.Forms.Padding(4);
             this.dropImage.Name = "dropImage";
             this.dropImage.Size = new System.Drawing.Size(386, 346);
             this.dropImage.TabIndex = 2;
@@ -88,7 +88,7 @@
             this.networkColumn,
             this.firstAiredColumn});
             this.showPossibilities.Location = new System.Drawing.Point(12, 135);
-            this.showPossibilities.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.showPossibilities.Margin = new System.Windows.Forms.Padding(4);
             this.showPossibilities.Name = "showPossibilities";
             this.showPossibilities.Size = new System.Drawing.Size(763, 566);
             this.showPossibilities.TabIndex = 3;
@@ -122,7 +122,7 @@
             // outputTemplateTextBox
             // 
             this.outputTemplateTextBox.Location = new System.Drawing.Point(18, 747);
-            this.outputTemplateTextBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.outputTemplateTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.outputTemplateTextBox.Name = "outputTemplateTextBox";
             this.outputTemplateTextBox.Size = new System.Drawing.Size(386, 31);
             this.outputTemplateTextBox.TabIndex = 4;
@@ -143,7 +143,7 @@
             // 
             this.advancedOptionsButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.advancedOptionsButton.Location = new System.Drawing.Point(739, 661);
-            this.advancedOptionsButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.advancedOptionsButton.Margin = new System.Windows.Forms.Padding(4);
             this.advancedOptionsButton.Name = "advancedOptionsButton";
             this.advancedOptionsButton.Size = new System.Drawing.Size(36, 40);
             this.advancedOptionsButton.TabIndex = 6;
@@ -176,7 +176,7 @@
             this.Controls.Add(this.showPossibilitiesLabel);
             this.Controls.Add(this.showPossibilities);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";
             this.Text = "TV Show Rename";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formClosing);

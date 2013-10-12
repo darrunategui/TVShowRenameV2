@@ -340,7 +340,6 @@
 		<col def="S0">ISDotNetInstallerArgsUninstall</col>
 		<col def="S0">ISDotNetInstallerArgsRollback</col>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td>{DD0EC9DD-34C0-4176-B269-3D015A536EEE}</td><td>INSTALLDIR</td><td>2</td><td/><td/><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
-		<row><td>TVDBDLL.dll</td><td>{8845A5CA-043A-4BCF-9869-11D16BD2171A}</td><td>INSTALLDIR</td><td>2</td><td/><td>tvdbdll.dll</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 		<row><td>TVShowRename.Primary_output</td><td>{454945F4-F896-43B6-9D37-8992C649D365}</td><td>INSTALLDIR</td><td>2</td><td/><td>tvshowrename.primary_output</td><td>17</td><td/><td/><td/><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td><td>/LogFile=</td></row>
 	</table>
 
@@ -1861,7 +1860,6 @@
 		<col key="yes" def="s38">Feature_</col>
 		<col key="yes" def="s72">Component_</col>
 		<row><td>AlwaysInstall</td><td>ISX_DEFAULTCOMPONENT</td></row>
-		<row><td>AlwaysInstall</td><td>TVDBDLL.dll</td></row>
 		<row><td>AlwaysInstall</td><td>TVShowRename.Primary_output</td></row>
 	</table>
 
@@ -1877,7 +1875,6 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>tvdbdll.dll</td><td>TVDBDLL.dll</td><td>TVDBDLL.dll</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\David\Visual Studio 2012\TVShowRenameV2\TVShowRename\Resources\TVDBDLL.dll</td><td>1</td><td/></row>
 		<row><td>tvshowrename.ico</td><td>ISX_DEFAULTCOMPONENT</td><td>TVSHOW~1.ICO|TVShowRename.ico</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\David\Visual Studio 2012\TVShowRenameV2\TVShowRename\Resources\TVShowRename.ico</td><td>1</td><td/></row>
 		<row><td>tvshowrename.primary_output</td><td>TVShowRename.Primary_output</td><td>TVShowRename.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;TVShowRename&gt;|Built</td><td>3</td><td/></row>
 	</table>
@@ -2137,7 +2134,6 @@
 		<col def="S0">HTTPLocation</col>
 		<col def="S0">Miscellaneous</col>
 		<row><td>ISX_DEFAULTCOMPONENT</td><td/><td/><td>_5359994F_265B_44CE_9F4D_36019CC9E74E_FILTER</td><td/><td/><td/><td/></row>
-		<row><td>TVDBDLL.dll</td><td/><td/><td>_D4AB0BA3_B145_4EF9_AA4B_60E43740992D_FILTER</td><td/><td/><td/><td/></row>
 		<row><td>TVShowRename.Primary_output</td><td/><td/><td>_42BC5B06_2BD1_4CE5_9181_9EB462D61BD1_FILTER</td><td/><td/><td/><td/></row>
 	</table>
 

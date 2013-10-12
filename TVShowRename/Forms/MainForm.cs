@@ -68,7 +68,7 @@ namespace TVShowRename
                 for (int i = this.Size.Height; i < tviNewHeight; ++i)
                 {
                     this.Size = new Size(this.Size.Width, i);
-                    wait(1000000);
+                    wait(2000000);
                 }
                 advancedOptionsButton.Text = "▲"; 
             }
@@ -78,7 +78,7 @@ namespace TVShowRename
                 for (int i = this.Size.Height; i > tviNewHeight; --i)
                 {
                     this.Size = new Size(this.Size.Width, i);
-                    wait(1000000);
+                    wait(2000000);
                 }
                 advancedOptionsButton.Text = "▼"; 
             }
@@ -109,6 +109,7 @@ namespace TVShowRename
     
         private void wait(int interval)
         {
+            //Thread.Sleep(interval);
             for (int j = 0; j < interval; ++j)
             {
 
