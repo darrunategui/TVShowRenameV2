@@ -3,16 +3,52 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVShowRename", "TVShowRename\TVShowRename.csproj", "{23103116-A6C6-42C7-A69C-AF410D0F1FAF}"
 EndProject
+Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "TVShowRenameInstaller", "TVShowRenameInstaller\TVShowRenameInstaller.isproj", "{06521927-5C01-433C-8062-A729682D06D6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{23103116-A6C6-42C7-A69C-AF410D0F1FAF} = {23103116-A6C6-42C7-A69C-AF410D0F1FAF}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVDBDLL", "..\..\Visual Studio 2010\TVDBDLL_SRC_0.5\TVDBDLL\TVDBDLL.csproj", "{5DF5E740-DF96-413D-B615-B3FF30F780B1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CD_ROM|Any CPU = CD_ROM|Any CPU
 		Debug|Any CPU = Debug|Any CPU
+		DVD-5|Any CPU = DVD-5|Any CPU
 		Release|Any CPU = Release|Any CPU
+		SingleImage|Any CPU = SingleImage|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{23103116-A6C6-42C7-A69C-AF410D0F1FAF}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{23103116-A6C6-42C7-A69C-AF410D0F1FAF}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
 		{23103116-A6C6-42C7-A69C-AF410D0F1FAF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{23103116-A6C6-42C7-A69C-AF410D0F1FAF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23103116-A6C6-42C7-A69C-AF410D0F1FAF}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{23103116-A6C6-42C7-A69C-AF410D0F1FAF}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
 		{23103116-A6C6-42C7-A69C-AF410D0F1FAF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{23103116-A6C6-42C7-A69C-AF410D0F1FAF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23103116-A6C6-42C7-A69C-AF410D0F1FAF}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{23103116-A6C6-42C7-A69C-AF410D0F1FAF}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{06521927-5C01-433C-8062-A729682D06D6}.CD_ROM|Any CPU.ActiveCfg = CD_ROM
+		{06521927-5C01-433C-8062-A729682D06D6}.CD_ROM|Any CPU.Build.0 = CD_ROM
+		{06521927-5C01-433C-8062-A729682D06D6}.Debug|Any CPU.ActiveCfg = DVD-5
+		{06521927-5C01-433C-8062-A729682D06D6}.Debug|Any CPU.Build.0 = DVD-5
+		{06521927-5C01-433C-8062-A729682D06D6}.DVD-5|Any CPU.ActiveCfg = DVD-5
+		{06521927-5C01-433C-8062-A729682D06D6}.DVD-5|Any CPU.Build.0 = DVD-5
+		{06521927-5C01-433C-8062-A729682D06D6}.Release|Any CPU.ActiveCfg = SingleImage
+		{06521927-5C01-433C-8062-A729682D06D6}.Release|Any CPU.Build.0 = SingleImage
+		{06521927-5C01-433C-8062-A729682D06D6}.SingleImage|Any CPU.ActiveCfg = SingleImage
+		{06521927-5C01-433C-8062-A729682D06D6}.SingleImage|Any CPU.Build.0 = SingleImage
+		{5DF5E740-DF96-413D-B615-B3FF30F780B1}.CD_ROM|Any CPU.ActiveCfg = Release|Any CPU
+		{5DF5E740-DF96-413D-B615-B3FF30F780B1}.CD_ROM|Any CPU.Build.0 = Release|Any CPU
+		{5DF5E740-DF96-413D-B615-B3FF30F780B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DF5E740-DF96-413D-B615-B3FF30F780B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DF5E740-DF96-413D-B615-B3FF30F780B1}.DVD-5|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DF5E740-DF96-413D-B615-B3FF30F780B1}.DVD-5|Any CPU.Build.0 = Debug|Any CPU
+		{5DF5E740-DF96-413D-B615-B3FF30F780B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DF5E740-DF96-413D-B615-B3FF30F780B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DF5E740-DF96-413D-B615-B3FF30F780B1}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
+		{5DF5E740-DF96-413D-B615-B3FF30F780B1}.SingleImage|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
