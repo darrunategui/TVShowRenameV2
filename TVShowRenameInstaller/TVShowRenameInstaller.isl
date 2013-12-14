@@ -1838,6 +1838,9 @@
 		<col def="S255">ProgId_</col>
 		<col def="S64">MIME_</col>
 		<col def="s38">Feature_</col>
+		<row><td>NewExtension1</td><td>TVShowRename.Primary_output</td><td/><td/><td>AlwaysInstall</td></row>
+		<row><td>NewExtension2</td><td>TVShowRename.Primary_output</td><td/><td/><td>AlwaysInstall</td></row>
+		<row><td>mkv</td><td>TVShowRename.Primary_output</td><td>mkv.File</td><td/><td>AlwaysInstall</td></row>
 	</table>
 
 	<table name="Feature">
@@ -2762,7 +2765,7 @@
 		<col def="I2">Encoded</col>
 		<col def="S0">Comment</col>
 		<col def="I4">TimeStamp</col>
-		<row><td>COMPANY_NAME</td><td>1033</td><td>David Arrunategui</td><td>0</td><td/><td>1847674645</td></row>
+		<row><td>COMPANY_NAME</td><td>1033</td><td>David Arrunategui</td><td>0</td><td/><td>1847675414</td></row>
 		<row><td>DN_AlwaysInstall</td><td>1033</td><td>Always Install</td><td>0</td><td/><td>1688309457</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_COLOR</td><td>1033</td><td>The color settings of your system are not adequate for running [ProductName].</td><td>0</td><td/><td>1688309457</td></row>
 		<row><td>IDPROP_EXPRESS_LAUNCH_CONDITION_OS</td><td>1033</td><td>The operating system is not adequate for running [ProductName].</td><td>0</td><td/><td>1688309457</td></row>
@@ -3862,10 +3865,12 @@
 		<row><td>IDS__TargetReq_DESC_RAM</td><td>1033</td><td>The amount of RAM is not adequate for running [ProductName].</td><td>0</td><td/><td>1688309457</td></row>
 		<row><td>IDS__TargetReq_DESC_RESOLUTION</td><td>1033</td><td>The screen resolution is not adequate for running [ProductName].</td><td>0</td><td/><td>1688309457</td></row>
 		<row><td>ID_STRING1</td><td>1033</td><td/><td>0</td><td/><td>1688309457</td></row>
-		<row><td>ID_STRING2</td><td>1033</td><td>http://www.DavidArrunategui.com</td><td>0</td><td/><td>1847674645</td></row>
-		<row><td>ID_STRING3</td><td>1033</td><td>David Arrunategui</td><td>0</td><td/><td>1847674645</td></row>
+		<row><td>ID_STRING2</td><td>1033</td><td>http://www.DavidArrunategui.com</td><td>0</td><td/><td>1847675414</td></row>
+		<row><td>ID_STRING3</td><td>1033</td><td>David Arrunategui</td><td>0</td><td/><td>1847675414</td></row>
 		<row><td>ID_STRING4</td><td>1033</td><td>TVSHOW~1|TVShowRename</td><td>0</td><td/><td>1688329106</td></row>
 		<row><td>IIDS_UITEXT_FeatureUninstalled</td><td>1033</td><td>This feature will remain uninstalled.</td><td>0</td><td/><td>1688309457</td></row>
+		<row><td>NEW_STRING1</td><td>1033</td><td>mkv</td><td>0</td><td/><td>1847691638</td></row>
+		<row><td>NEW_STRING2</td><td>1033</td><td>mkv</td><td>0</td><td/><td>1847701974</td></row>
 	</table>
 
 	<table name="ISSwidtagProperty">
@@ -4105,7 +4110,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>ISTheme</td><td>InstallShield Blue.theme</td></row>
 		<row><td>ISUSLock</td><td>{11B3EB47-2022-41EF-A761-6504379139F3}</td></row>
 		<row><td>ISUSSignature</td><td>{F3982E07-ACA7-4800-85BC-89058B28BFCF}</td></row>
-		<row><td>ISVisitedViews</td><td>viewAssistant,viewISToday,viewAppFiles,viewRelease,viewDesignPatches,viewProject,viewRealSetupDesign,viewSetupDesign,viewUpgradePaths,viewSetupTypes,viewSystemSearch,viewInstallScriptStd,viewCustomActions,viewSupportFiles,viewShortcuts,viewFeatureFiles</td></row>
+		<row><td>ISVisitedViews</td><td>viewAssistant,viewISToday,viewAppFiles,viewRelease,viewDesignPatches,viewProject,viewRealSetupDesign,viewSetupDesign,viewUpgradePaths,viewSetupTypes,viewSystemSearch,viewInstallScriptStd,viewCustomActions,viewSupportFiles,viewShortcuts,viewFeatureFiles,viewFileExtensions</td></row>
 		<row><td>Limited</td><td>1</td></row>
 		<row><td>LockPermissionMode</td><td>1</td></row>
 		<row><td>MsiExecCmdLineOptions</td><td/></row>
@@ -4403,6 +4408,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="S72">Icon_</col>
 		<col def="I2">IconIndex</col>
 		<col def="I4">ISAttributes</col>
+		<row><td>mkv.File</td><td/><td/><td>mkv file association</td><td/><td>0</td><td/></row>
 	</table>
 
 	<table name="Property">
@@ -4772,6 +4778,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<col def="I2">Sequence</col>
 		<col def="L255">Command</col>
 		<col def="L255">Argument</col>
+		<row><td>mkv</td><td>open</td><td/><td>&amp;Rename</td><td/></row>
 	</table>
 
 	<table name="_Validation">
