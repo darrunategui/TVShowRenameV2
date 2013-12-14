@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVShowRename", "TVShowRenam
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TVDBDLL", "TVDBDLL\TVDBDLL.csproj", "{5DF5E740-DF96-413D-B615-B3FF30F780B1}"
 EndProject
+Project("{6141683F-8A12-4E36-9623-2EB02B2C2303}") = "TVShowRenameInstaller", "TVShowRenameInstaller\TVShowRenameInstaller.isproj", "{F21BAA35-B84C-4CD1-8EEB-1410CB01B628}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		CD_ROM|Any CPU = CD_ROM|Any CPU
@@ -34,6 +36,16 @@ Global
 		{5DF5E740-DF96-413D-B615-B3FF30F780B1}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5DF5E740-DF96-413D-B615-B3FF30F780B1}.SingleImage|Any CPU.ActiveCfg = Release|Any CPU
 		{5DF5E740-DF96-413D-B615-B3FF30F780B1}.SingleImage|Any CPU.Build.0 = Release|Any CPU
+		{F21BAA35-B84C-4CD1-8EEB-1410CB01B628}.CD_ROM|Any CPU.ActiveCfg = CD_ROM
+		{F21BAA35-B84C-4CD1-8EEB-1410CB01B628}.CD_ROM|Any CPU.Build.0 = CD_ROM
+		{F21BAA35-B84C-4CD1-8EEB-1410CB01B628}.Debug|Any CPU.ActiveCfg = DVD-5
+		{F21BAA35-B84C-4CD1-8EEB-1410CB01B628}.Debug|Any CPU.Build.0 = DVD-5
+		{F21BAA35-B84C-4CD1-8EEB-1410CB01B628}.DVD-5|Any CPU.ActiveCfg = DVD-5
+		{F21BAA35-B84C-4CD1-8EEB-1410CB01B628}.DVD-5|Any CPU.Build.0 = DVD-5
+		{F21BAA35-B84C-4CD1-8EEB-1410CB01B628}.Release|Any CPU.ActiveCfg = SingleImage
+		{F21BAA35-B84C-4CD1-8EEB-1410CB01B628}.Release|Any CPU.Build.0 = SingleImage
+		{F21BAA35-B84C-4CD1-8EEB-1410CB01B628}.SingleImage|Any CPU.ActiveCfg = SingleImage
+		{F21BAA35-B84C-4CD1-8EEB-1410CB01B628}.SingleImage|Any CPU.Build.0 = SingleImage
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

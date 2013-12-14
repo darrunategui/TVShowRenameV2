@@ -1049,6 +1049,7 @@
 	<table name="CreateFolder">
 		<col key="yes" def="s72">Directory_</col>
 		<col key="yes" def="s72">Component_</col>
+		<row><td>INSTALLDIR</td><td>ISX_DEFAULTCOMPONENT</td></row>
 	</table>
 
 	<table name="CustomAction">
@@ -1875,7 +1876,6 @@
 		<col def="S255">ISBuildSourcePath</col>
 		<col def="I4">ISAttributes</col>
 		<col def="S72">ISComponentSubFolder_</col>
-		<row><td>tvshowrename.ico</td><td>ISX_DEFAULTCOMPONENT</td><td>TVSHOW~1.ICO|TVShowRename.ico</td><td>0</td><td/><td/><td/><td>1</td><td>C:\Users\David\Visual Studio 2012\TVShowRenameV2\TVShowRename\Resources\TVShowRename.ico</td><td>1</td><td/></row>
 		<row><td>tvshowrename.primary_output</td><td>TVShowRename.Primary_output</td><td>TVShowRename.Primary output</td><td>0</td><td/><td/><td/><td>1</td><td>&lt;TVShowRename&gt;|Built</td><td>3</td><td/></row>
 	</table>
 
@@ -4451,6 +4451,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>IS_SQLSERVER_USERNAME</td><td>sa</td><td/></row>
 		<row><td>InstallChoice</td><td>AR</td><td/></row>
 		<row><td>LAUNCHREADME</td><td>1</td><td/></row>
+		<row><td>MSIFASTINSTALL</td><td>3</td><td/></row>
 		<row><td>Manufacturer</td><td>##COMPANY_NAME##</td><td/></row>
 		<row><td>PIDKEY</td><td/><td/></row>
 		<row><td>PIDTemplate</td><td>12345&lt;###-%%%%%%%&gt;@@@@@</td><td/></row>
@@ -4479,7 +4480,7 @@ UwBpAG4AZwBsAGUASQBtAGEAZwBlAAEARQB4AHAAcgBlAHMAcwA=
 		<row><td>PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS</td><td>##IDS_PROGMSG_IIS_ROLLBACKWEBSERVICEEXTENSIONS##</td><td/></row>
 		<row><td>ProductCode</td><td>{A34FB976-2B78-4083-88DC-3EA0A0A0D136}</td><td/></row>
 		<row><td>ProductName</td><td>TV Show Rename</td><td/></row>
-		<row><td>ProductVersion</td><td>2.0</td><td/></row>
+		<row><td>ProductVersion</td><td>1.005</td><td/></row>
 		<row><td>ProgressType0</td><td>install</td><td/></row>
 		<row><td>ProgressType1</td><td>Installing</td><td/></row>
 		<row><td>ProgressType2</td><td>installed</td><td/></row>
