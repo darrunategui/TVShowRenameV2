@@ -121,6 +121,12 @@
             // 
             // outputTemplateTextBox
             // 
+            this.outputTemplateTextBox.AutoCompleteCustomSource.AddRange(new string[] {
+            "{TVShow}",
+            "{S}",
+            "{E}",
+            "{Title}"});
+            this.outputTemplateTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Append;
             this.outputTemplateTextBox.Location = new System.Drawing.Point(18, 747);
             this.outputTemplateTextBox.Margin = new System.Windows.Forms.Padding(4);
             this.outputTemplateTextBox.Name = "outputTemplateTextBox";
@@ -175,6 +181,7 @@
             this.Controls.Add(this.dropImage);
             this.Controls.Add(this.showPossibilitiesLabel);
             this.Controls.Add(this.showPossibilities);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "MainForm";

@@ -14,18 +14,19 @@ namespace TVShowRename
     public partial class MainForm : Form
     {
         #region Instance variables
-        
         private RenameController ivRenameControl;
         #endregion
 
-        public MainForm()
+        public MainForm(RenameController control)
         {
             InitializeComponent();
             this.Size = new Size(409, 410);
-            ivRenameControl = new RenameController(this);
+            ivRenameControl = control;
             setOutputFormatText();
+            MaximizeBox = false;
         }
 
+        #region drag-n-drop events
         private void showDraggedOnForm(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.FileDrop))
@@ -46,6 +47,7 @@ namespace TVShowRename
             ivRenameControl.renameTVShows(tvsDroppedFiles);
             saveOutputFormat();
         }
+        #endregion drag-n-drop
 
         private void showWasSelected(object sender, EventArgs e)
         {
@@ -70,7 +72,7 @@ namespace TVShowRename
                     this.Size = new Size(this.Size.Width, i);
                     wait(2000000);
                 }
-                advancedOptionsButton.Text = "▲"; 
+                advancedOptionsButton.Text = "▲";
             }
             else
             {
@@ -80,7 +82,7 @@ namespace TVShowRename
                     this.Size = new Size(this.Size.Width, i);
                     wait(2000000);
                 }
-                advancedOptionsButton.Text = "▼"; 
+                advancedOptionsButton.Text = "▼";
             }
             toggleAdvancedOptions();
         }
@@ -90,7 +92,7 @@ namespace TVShowRename
             outputTemplateLabel.Visible = !outputTemplateLabel.Visible;
             outputTemplateTextBox.Visible = !outputTemplateTextBox.Visible;
         }
-   
+
         private void setOutputFormatText()
         {
             OutputFormatController outputFormat = new OutputFormatController();
@@ -104,16 +106,28 @@ namespace TVShowRename
         private void saveOutputFormat()
         {
             OutputFormatController outputFormat = new OutputFormatController();
-            outputFormat.saveOutputFormat(outputTemplateTextBox.Text);            
+            outputFormat.saveOutputFormat(outputTemplateTextBox.Text);
         }
-    
+
         private void wait(int interval)
         {
-            //Thread.Sleep(interval);
-            for (int j = 0; j < interval; ++j)
-            {
+            Thread.Sleep(2);
+        }
 
-            }
+        public void Recieve(string[] args)
+        {
+            Invoke(new Action(() =>
+            {
+                // Restore the window if it was minimized.
+                if (WindowState == FormWindowState.Minimized)
+                {
+                    WindowState = FormWindowState.Normal;
+                    Location = new Point((RestoreBounds.X < 0) ? 0 : RestoreBounds.X, (RestoreBounds.Y < 0) ? 0 : RestoreBounds.Y);
+                }
+
+                // Bring the window to the foreground.
+                NativeMethods.SetForegroundWindow(Handle);
+            }));
         }
     }
 }

@@ -10,7 +10,7 @@ using System.IO;
 
 namespace TVShowRename
 {
-    class RenameController
+    public class RenameController
     {
         #region Instance Variables
         /// Delegate to call the errorHandler.
@@ -18,56 +18,54 @@ namespace TVShowRename
         /// Event of errorCall.
         private event errorCall formErrorCaller;
         /// Object that holds reference to tvdb connection.
-        private TVDB tvDbHandler;
+        private TVDB _tvDbHandler;
         /// <summary>
         /// Regex to match the common format of downloaded tv show files
         /// </summary>
-        private Regex ivInputFilenameRegex;
+        private Regex _inputFilenameRegex = new Regex("[\\w|.|\\s]+\\.[s]\\d{2}[e]\\d{2}[\\w*|.|\\s]+", RegexOptions.IgnoreCase);
         /// <summary>
         /// Regex to match the S00E00 part of the downloaded tv show file
         /// </summary>
-        private Regex ivEpisodeInfoRegex;
+        private Regex _episodeInfoRegex = new Regex("[s]\\d{2}[e]\\d{2}", RegexOptions.IgnoreCase);
         /// <summary>
         /// Name of the tvShow
         /// </summary>
-        private String ivTVShowName;
+        private String _TVShowName;
         /// <summary>
         /// Episode and season info
         /// </summary>
-        private String ivEpisodeInfo;
+        private String _episodeInfo;
         /// <summary>
         /// The title of the episode
         /// </summary>
-        private String ivEpisodeTitle;
+        private String _episodeTitle;
         /// <summary>
         /// Full path to the input file
         /// </summary>
-        private String ivAbsolutePathWithFile;
+        private String _absolutePathWithFile;
         /// <summary>
         /// The file extension of the input file
         /// </summary>
-        private String ivFileExtension;
+        private String _fileExtension;
         /// <summary>
         /// Determines if the application should close directly after renaming a file
         /// </summary>
-        private Boolean ivShouldCloseAfterRename = false;
+        private Boolean _shouldCloseAfterRename = false;
         /// <summary>
         /// Reference to the mainForm
         /// </summary>
-        private MainForm ivMainForm;
+        public MainForm MainForm { get; set; }
         /// <summary>
         /// Handles saving and getting TV Show ID's
         /// </summary>
-        private SavedTVShowsController ivSavedTVShowControl;
+        private SavedTVShowsController _savedTVShowControl;
         #endregion
 
-        public RenameController(MainForm mainForm)
+        public RenameController()
         {
             formErrorCaller += new errorCall(errorHandler);
-            ivSavedTVShowControl = new SavedTVShowsController();
-            ivInputFilenameRegex = new Regex("[\\w|.|\\s]+\\.[s]\\d{2}[e]\\d{2}[\\w*|.|\\s]+", RegexOptions.IgnoreCase);
-            ivEpisodeInfoRegex = new Regex("[s]\\d{2}[e]\\d{2}", RegexOptions.IgnoreCase);
-            ivMainForm = mainForm;
+            _savedTVShowControl = new SavedTVShowsController();
+            MainForm = new MainForm(this);
             prepareForNextEpisode();
             enableControlVisibility(false);
         }
@@ -79,46 +77,47 @@ namespace TVShowRename
         /// If the input TV Show's ID is saved, then the renaming is initiated automatically.
         /// If not, the Show Possibilities grid is populated with the possible results.
         /// </summary>
-        /// <param name="fvFilesToRename">The list of files the rename.</param>
-        public void renameTVShows(String[] fvFilesToRename)
+        /// <param name="filesToRename">The list of files the rename.</param>
+        public void renameTVShows(String[] filesToRename)
         {
             // Each String 'file' will contain the absolute path to the file including the filename
-            foreach (String file in fvFilesToRename)
+            foreach (String file in filesToRename)
             {
-                ivAbsolutePathWithFile = file;
+                _absolutePathWithFile = file;
                 // If the input file matches that of the usual downloaded filename type, proceed
-                if (ivInputFilenameRegex.IsMatch(file))
+                if (_inputFilenameRegex.IsMatch(file))
                 {
-                    // Get only the name of the file (i.e. remove the path). Split along the '\' and get the last token
-                    String fileName = file.Split('\\')[file.Split('\\').Length - 1];
+                    // Get only the name of the file with the extension
+                    String fileName = Path.GetFileName(file);
 
                     // Split the file name into tokens seperated by '.'
                     // This way the tv Show name, season/episode Identifier, and file extension can be isolated
                     String[] tokens = fileName.Split('.');
 
                     // The last token will be the file extension
-                    ivFileExtension = tokens[tokens.Length - 1];
+                    _fileExtension = Path.GetExtension(file);
 
-                    // Build the formated tvShow name
+                    // Build the formatted tvShow name
                     foreach (string token in tokens)
                     {
                         //if the token is the S01E01 part, ensure it is all uppercase
-                        if (ivEpisodeInfoRegex.IsMatch(token))
+                        if (_episodeInfoRegex.IsMatch(token))
                         {
-                            ivEpisodeInfo += token.ToUpper();
+                            _episodeInfo += token.ToUpper();
                             break; // break since the rest of the filename is not important
                         }
                         else
                         {
-                            ivTVShowName += CapitalizeFirstLetter(token) + " "; // Assumes the tokens start with the name of the tv show
+                            _TVShowName += CapitalizeFirstLetter(token) + " "; // Assumes the tokens start with the name of the tv show
                         }
                     }
-                    ivTVShowName = ivTVShowName.Substring(0, ivTVShowName.Length - 1); // remove the extra space after ivTVShowName
+                    _TVShowName = _TVShowName.Substring(0, _TVShowName.Length - 1); // remove the extra space
+                    
                     // At this point, 
                     //  ivTVShowName holds the full name of the TV Show 
                     //  ivEpisodeInfo holds the season/episode identifier
 
-                    int tvShowID = ivSavedTVShowControl.getShowID(ivTVShowName); // attempt to get the tvShows ID
+                    int tvShowID = _savedTVShowControl.getShowID(_TVShowName); // attempt to get the tvShows ID
                     if (tvShowID > 0) // Positive ShowID means it has been saved before and is valid
                     {
                         renameShow(tvShowID);
@@ -126,7 +125,7 @@ namespace TVShowRename
                     else // TVShow ID is not saved, so a query must be made to determine the ID
                     {
                         // Populate the showPossibilities table shows matching the given TV show name
-                        populateShowPossibilitiesList(ivTVShowName);
+                        populateShowPossibilitiesList(_TVShowName);
                     }
                 }
             }
@@ -140,9 +139,9 @@ namespace TVShowRename
         /// <param name="fvTVShowName">The TV Shows name</param>
         public void populateShowPossibilitiesList(String fvTVShowName)
         {
-            tvDbHandler = new TVDB();
-            tvDbHandler.parentErrorCaller = formErrorCaller;
-            List<ShowResultItem> results = tvDbHandler.searchShowByName(fvTVShowName);
+            _tvDbHandler = new TVDB();
+            _tvDbHandler.parentErrorCaller = formErrorCaller;
+            List<ShowResultItem> results = _tvDbHandler.searchShowByName(fvTVShowName);
             if (results.Count == 0) // no results, so return
             {
                 MessageBox.Show("No TV Show by the name '" + fvTVShowName + "' was found.");
@@ -151,29 +150,29 @@ namespace TVShowRename
             // Only 1 tv show resulted from the given name query, so save the ID and choose this tvShow automatically
             else if (results.Count == 1)
             {
-                ivSavedTVShowControl.saveNewTVShow(fvTVShowName, ivTVShowName, results[0].ID);
+                _savedTVShowControl.saveNewTVShow(fvTVShowName, _TVShowName, results[0].ID);
                 renameShow(results[0].ID);
             }
             // Multiple tvShows resulted from the given name query, so populate the listView
             // so the user can choose the tvShow they want
             else
             {
-                ivMainForm.showPossibilities.Items.Clear();
+                MainForm.showPossibilities.Items.Clear();
                 foreach (ShowResultItem result in results)
                 {
                     ListViewItem item = new ListViewItem(result.ShowName);
                     item.SubItems.Add(result.Network);
                     item.SubItems.Add(parseFirstAiredValue(result.FirstAired));
                     item.Tag = result;
-                    ivMainForm.showPossibilities.Items.Add(item);
+                    MainForm.showPossibilities.Items.Add(item);
                 }
                 // Autosize the column widths to the data just added
-                foreach (ColumnHeader column in ivMainForm.showPossibilities.Columns)
+                foreach (ColumnHeader column in MainForm.showPossibilities.Columns)
                 {
                     column.Width = -2;
                 }
                 enableControlVisibility(true);
-                ivShouldCloseAfterRename = false;
+                _shouldCloseAfterRename = false;
             }
         }
 
@@ -184,31 +183,31 @@ namespace TVShowRename
         /// <param name="fvShowID">The input files Show ID.</param>
         private void renameShow(int fvShowID)
         {
-            tvDbHandler = new TVDB();  // TVDB will handle the TV show query
-            tvDbHandler.parentErrorCaller = formErrorCaller;
-            Dictionary<String, EpisodeResultItem> episodeResults = tvDbHandler.getEpisodesFromShowID(fvShowID); // Get all episodes for the given show ID
+            _tvDbHandler = new TVDB();  // TVDB will handle the TV show query
+            _tvDbHandler.parentErrorCaller = formErrorCaller;
+            Dictionary<String, EpisodeResultItem> episodeResults = _tvDbHandler.getEpisodesFromShowID(fvShowID); // Get all episodes for the given show ID
 
             if (episodeResults.Count > 0)
             {
-                String tvEpisodeKey = "" + getSeasonNumberFrom(ivEpisodeInfo) + getEpisodeNumberFrom(ivEpisodeInfo); // The key to the episode in the dictionary
+                String tvEpisodeKey = "" + getSeasonNumberFrom(_episodeInfo) + getEpisodeNumberFrom(_episodeInfo); // The key to the episode in the dictionary
                 
-                ivEpisodeTitle = episodeResults[tvEpisodeKey].Title; // Save the title of the episode
+                _episodeTitle = episodeResults[tvEpisodeKey].Title; // Save the title of the episode
                 
                 char[] illegalChars = { '<', '>', ':', '"', '/', '\\', '|', '?', '*' };
                 // Loop through all the illegal filename characters and remove any if present
                 foreach (char c in illegalChars)
                 {
-                    ivEpisodeTitle = ivEpisodeTitle.Replace(c.ToString(), "");
+                    _episodeTitle = _episodeTitle.Replace(c.ToString(), "");
                 }
 
                 // Save the absolute path to the new filename so it can be renamed
-                String tvAbsolutePathWithFileRenamed = getNewAbsolutePathWithFileRenamed(ivAbsolutePathWithFile.Split('\\'), ivTVShowName, ivEpisodeInfo, ivEpisodeTitle, ivFileExtension);
+                String tvAbsolutePathWithFileRenamed = getNewAbsolutePathWithFileRenamed(_absolutePathWithFile.Split('\\'), _TVShowName, _episodeInfo, _episodeTitle, _fileExtension);
                 try
                 {
                     // Try to rename the file
-                    File.Move(ivAbsolutePathWithFile, tvAbsolutePathWithFileRenamed);
+                    File.Move(_absolutePathWithFile, tvAbsolutePathWithFileRenamed);
                     // Show a success notification
-                    ivMainForm.successNotification.ShowBalloonTip(1, "Success", ivTVShowName + " " + ivEpisodeInfo + " has been renamed to '" + ivEpisodeTitle + "'", ToolTipIcon.Info);
+                    MainForm.successNotification.ShowBalloonTip(1, "Success", _TVShowName + " " + _episodeInfo + " has been renamed to '" + _episodeTitle + "'", ToolTipIcon.Info);
                 }
                 catch (SystemException e)
                 {
@@ -226,11 +225,11 @@ namespace TVShowRename
         /// </summary>
         public void showWasSelected()
         {
-            if (ivMainForm.showPossibilities.SelectedItems.Count == 1)
+            if (MainForm.showPossibilities.SelectedItems.Count == 1)
             {
-                ShowResultItem selectedShow = (ShowResultItem) ivMainForm.showPossibilities.SelectedItems[0].Tag;
+                ShowResultItem selectedShow = (ShowResultItem) MainForm.showPossibilities.SelectedItems[0].Tag;
                 int showID = selectedShow.ID;
-                ivSavedTVShowControl.saveNewTVShow(selectedShow.ShowName, ivTVShowName, showID); // save the showID for next time
+                _savedTVShowControl.saveNewTVShow(selectedShow.ShowName, _TVShowName, showID); // save the showID for next time
                 renameShow(showID);
             }
         }
@@ -287,7 +286,7 @@ namespace TVShowRename
         /// </summary>
         private String getFileOutputFormat(String tvShowName, String episodeInfo, String episodeTitle)
         {
-            String tvsOutputFormat = ivMainForm.outputTemplateTextBox.Text;
+            String tvsOutputFormat = MainForm.outputTemplateTextBox.Text;
             if (tvsOutputFormat == String.Empty)
             {
                 return tvShowName + " " + episodeInfo + " - " + episodeTitle;
@@ -338,12 +337,12 @@ namespace TVShowRename
         /// <param name="controlVisibility">False, shows 'drag TV Show here' controls. True, shows the list of show posibilities.</param>
         private void enableControlVisibility(Boolean controlVisibility)
         {
-            ivMainForm.showPossibilities.Visible = controlVisibility;
-            ivMainForm.showPossibilitiesLabel.Visible = controlVisibility;
-            ivMainForm.dragTVShowLabel.Visible = !controlVisibility;
-            ivMainForm.dropImage.Visible = !controlVisibility;
-            ivMainForm.advancedOptionsButton.Visible = !controlVisibility;
-            ivMainForm.advancedOptionsLabel.Visible = !controlVisibility;
+            MainForm.showPossibilities.Visible = controlVisibility;
+            MainForm.showPossibilitiesLabel.Visible = controlVisibility;
+            MainForm.dragTVShowLabel.Visible = !controlVisibility;
+            MainForm.dropImage.Visible = !controlVisibility;
+            MainForm.advancedOptionsButton.Visible = !controlVisibility;
+            MainForm.advancedOptionsLabel.Visible = !controlVisibility;
         }
 
         /// <summary>
@@ -351,10 +350,10 @@ namespace TVShowRename
         /// </summary>
         private void prepareForNextEpisode()
         {
-            ivTVShowName = "";
-            ivEpisodeInfo = "";
-            ivEpisodeTitle = "";
-            ivMainForm.dropImage.BackgroundImage = Properties.Resources.DropImage;
+            _TVShowName = "";
+            _episodeInfo = "";
+            _episodeTitle = "";
+            MainForm.dropImage.BackgroundImage = Properties.Resources.DropImage;
         }
         #endregion
     }
