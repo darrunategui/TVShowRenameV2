@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,6 +42,16 @@
   <ItemGroup>
     <Compile Include="MEFLoader.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TVShowRename.Business.Contracts\TVShowRename.Business.Contracts.csproj">
+      <Project>{f99e9a0c-0744-496a-afb4-95875bba51f6}</Project>
+      <Name>TVShowRename.Business.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\TVShowRename.Business.Managers\TVShowRename.Business.Managers.csproj">
+      <Project>{2102d1c9-80a1-4524-8051-378df4963ea5}</Project>
+      <Name>TVShowRename.Business.Managers</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
