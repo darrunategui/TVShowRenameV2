@@ -17,7 +17,7 @@ namespace TVShowRename.Business.Managers
         {
             try
             {
-                return ObjectBase.Container.GetExport<T>().Value;
+                return ObjectBase.Container.GetExportedValue<T>();
             }
             catch
             {

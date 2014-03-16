@@ -53,7 +53,7 @@ namespace TVShowRename.Business.Managers
                 XDocument document = XDocument.Parse(xml);
                 List<Show> shows = new List<Show>();
 
-                foreach (XElement show in document.Elements(ShowFields.Series))
+                foreach (XElement show in document.Descendants(ShowFields.Series))
                 {
                     int id = (show.HasElement(ShowFields.Id)) ?
                              int.Parse(show.Element(ShowFields.Id).Value) :
@@ -79,11 +79,7 @@ namespace TVShowRename.Business.Managers
                                          show.Element(ShowFields.Network).Value :
                                          ShowFields.DefaultNetwork;
 
-                    int imdbId = (show.HasElement(ShowFields.ImdbId)) ?
-                                 int.Parse(show.Element(ShowFields.ImdbId).Value) :
-                                 ShowFields.DefaultImdbId;
-
-                    Show newShow = new Show(id, showTitle, description, language, firstAired, network, imdbId);
+                    Show newShow = new Show(id, showTitle, description, language, firstAired, network);
 
                     shows.Add(newShow);
                 }
@@ -122,7 +118,7 @@ namespace TVShowRename.Business.Managers
                 XDocument document = XDocument.Parse(xml);
                 List<Episode> episodes = new List<Episode>();
 
-                foreach (XElement episode in document.Elements("Episode"))
+                foreach (XElement episode in document.Descendants("Episode"))
                 {
                     int episodeId = (episode.HasElement(EpisodeFields.Id)) ?
                                     int.Parse(episode.Element(EpisodeFields.Id).Value) :

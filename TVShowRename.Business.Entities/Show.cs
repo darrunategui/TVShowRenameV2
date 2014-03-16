@@ -20,10 +20,8 @@ namespace TVShowRename.Business.Entities
 
         public string Network { get; private set; }
 
-        public int IMDBId { get; private set; }
-
         public Show(int id, string title, string description, string language,
-                    DateTime firstAired, string network, int imdbId)
+                    DateTime firstAired, string network)
         {
             Id = id;
             Title = title;
@@ -31,7 +29,6 @@ namespace TVShowRename.Business.Entities
             Language = language;
             FirstAired = firstAired;
             Network = network;
-            IMDBId = imdbId;
         }
     }
 }

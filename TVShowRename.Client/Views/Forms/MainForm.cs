@@ -29,6 +29,12 @@ namespace TVShowRename.Client
 
         public void AddShowResults(IEnumerable<Show> shows)
         {
+            foreach (Show show in shows)
+            {
+                ListViewItem item = new ListViewItem(new string[] { show.Title, show.Network, show.Description });
+                item.Tag = show;
+                lstShowResults.Items.Add(item);
+            }
         }
         #endregion
 
@@ -38,6 +44,34 @@ namespace TVShowRename.Client
             // Do nothing for now...
         }
         #endregion
+
+        private void MainForm_DragDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
+                _controller.Rename(droppedFiles);
+                
+            }
+        }
+
+        private void MainForm_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+        }
+
+        private void MainForm_DragLeave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lstShowResults_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
 
     }
 }

@@ -9,6 +9,9 @@ namespace TVShowRename.Client
         [Import]
         protected IServiceFactory _serviceFactory;
 
+        /// <summary>
+        /// Constructor imports are parts marked with the import attribute.
+        /// </summary>
         public Controller()
         {
             ObjectBase.Container.SatisfyImportsOnce(this);
