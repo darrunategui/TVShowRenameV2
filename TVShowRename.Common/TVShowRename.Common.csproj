@@ -40,6 +40,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\EpisodeFields.cs" />
+    <Compile Include="Data\ShowFields.cs" />
     <Compile Include="Exceptions\ShowNotFoundException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

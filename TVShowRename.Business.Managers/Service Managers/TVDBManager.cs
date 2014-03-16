@@ -28,22 +28,87 @@ namespace TVShowRename.Business.Managers
 
         public IEnumerable<Show> GetShowsByTitle(string title)
         {
-            throw new NotImplementedException();
+            if ( String.IsNullOrEmpty(title) )
+            {
+                throw new ArgumentException("The title must not be null or empty.", "title");
+            }
+
+            string address = String.Format("{0}/api/GetSeries.php?seriesname={1}&language=en", mirror, title);
+            string xml;
+            using (WebClient client = new WebClient())
+            {
+                xml = client.DownloadString(address);
+            }
+
+            // Make sure the downloaded data is valid.
+            if (String.IsNullOrEmpty(xml))
+            {
+                throw new ShowNotFoundException(String.Format("A show with the title '{0}' could not be found.", title));
+            }
+
+            try
+            {
+                XDocument document = XDocument.Parse(xml);
+                List<Show> shows = new List<Show>();
+
+                foreach (XElement show in document.Elements(ShowFields.Series))
+                {
+                    int id = (show.HasElement(ShowFields.Id)) ?
+                             int.Parse(show.Element(ShowFields.Id).Value) :
+                             ShowFields.DefaultId;
+
+                    string language = (show.HasElement(ShowFields.Language)) ?
+                                      show.Element(ShowFields.Language).Value :
+                                      ShowFields.DefaultLanguage;
+
+                    string showTitle = (show.HasElement(ShowFields.Title)) ?
+                                       show.Element(ShowFields.Title).Value :
+                                       ShowFields.DefaultTitle;
+
+                    string description = (show.HasElement(ShowFields.Description)) ?
+                                         show.Element(ShowFields.Description).Value :
+                                         ShowFields.DefaultDescription;
+
+                    DateTime firstAired = (show.HasElement(ShowFields.FirstAired) && DateTime.TryParse(show.Element(ShowFields.FirstAired).Value, out firstAired)) ?
+                                          firstAired :
+                                          ShowFields.DefaultFirstAired;
+
+                    string network = (show.HasElement(ShowFields.Network)) ?
+                                         show.Element(ShowFields.Network).Value :
+                                         ShowFields.DefaultNetwork;
+
+                    int imdbId = (show.HasElement(ShowFields.ImdbId)) ?
+                                 int.Parse(show.Element(ShowFields.ImdbId).Value) :
+                                 ShowFields.DefaultImdbId;
+
+                    Show newShow = new Show(id, showTitle, description, language, firstAired, network, imdbId);
+
+                    shows.Add(newShow);
+                }
+                return shows;
+            }
+            catch (Exception ex)
+            {
+                throw new InvalidOperationException("Could not parse the shows", ex);
+            }
         }
 
         public IEnumerable<Episode> GetEpisodesByShowId(int id)
         {
             // Argument check
-            if ( id <= 0 )
+            if (id <= 0)
             {
-                throw new ArgumentException("The show ID must be greater than 0");
+                throw new ArgumentException("The show ID must be greater than 0", "id");
             }
 
             // Download the xml document with the episode data for the given show ID
             string address = String.Format("{0}/api/{1}/series/{2}/all/en.xml", mirror, apiKey, id);
-            WebClient client = new WebClient();
-            string xml = client.DownloadString(address);
-
+            string xml;
+            using (WebClient client = new WebClient())
+            {
+                xml = client.DownloadString(address);
+            }
+            
             // Make sure the downloaded data is valid.
             if (String.IsNullOrEmpty(xml))
             {
