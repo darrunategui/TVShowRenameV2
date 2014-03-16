@@ -9,7 +9,7 @@ using System.Threading;
 
 namespace Core.Common.Singleton
 {
-   public class SingletonController
+   public class SingletonController : IDisposable
    {
       private bool _disposed;
       private Mutex _singleInstanceMutex;
