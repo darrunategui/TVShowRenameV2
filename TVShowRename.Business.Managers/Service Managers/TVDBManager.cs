@@ -15,7 +15,6 @@ namespace TVShowRename.Business.Managers
 {
     public class TVDBManager : ITVDBService
     {
-
         /// <summary>
         /// Api Key to acces tvdb.
         /// </summary>
