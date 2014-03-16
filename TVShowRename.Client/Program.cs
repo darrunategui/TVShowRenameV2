@@ -24,7 +24,7 @@ namespace TVShowRename.Client
 
 
             MainForm form = new MainForm();
-
+            MainController controller = new MainController(form);
             using (SingletonController singletonController = new SingletonController("TVShowRename", form))
             {
                 if ( singletonController.IsFirstInstance )

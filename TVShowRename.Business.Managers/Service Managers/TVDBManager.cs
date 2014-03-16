@@ -1,6 +1,7 @@
 ﻿using Core.Common.Extensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Composition;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -13,6 +14,8 @@ using TVShowRename.Common.Data;
 
 namespace TVShowRename.Business.Managers
 {
+    [Export(typeof(ITVDBService))]
+    [PartCreationPolicy(CreationPolicy.NonShared)]
     public class TVDBManager : ITVDBService
     {
         /// <summary>
