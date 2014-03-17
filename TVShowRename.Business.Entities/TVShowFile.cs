@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,21 @@ namespace TVShowRename.Business.Entities
       public int Season { get; set; }
 
       public int Episode { get; set; }
+
+      public string Extension
+      {
+         get
+         {
+            if ( !String.IsNullOrEmpty(Filename) )
+            {
+               return Path.GetExtension(Filename);
+            }
+            else
+            {
+               return String.Empty;
+            }
+         }
+      }
 
       public TVShowFile(string filename, string title, int season, int episode)
       {
