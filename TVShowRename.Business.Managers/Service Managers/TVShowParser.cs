@@ -65,7 +65,7 @@ namespace TVShowRename.Business.Managers
       /// Gets the season number from the Season And Episode Identifier.
       /// </summary>
       /// <param name="SeasonAndEpisodeIdentifier">The identifier</param>
-      /// <returns>Returns the season number.</returns>
+      /// <returns>The season number.</returns>
       private int GetSeasonNumberFrom(string SeasonAndEpisodeIdentifier)
       {
          return int.Parse(SeasonAndEpisodeIdentifier.Substring(1, 2));
@@ -75,7 +75,7 @@ namespace TVShowRename.Business.Managers
       /// Gets the episode number from the Season And Episode Identifier.
       /// </summary>
       /// <param name="SeasonAndEpisodeIdentifier"></param>
-      /// <returns>Returns the episode number.</returns>
+      /// <returns>The episode number.</returns>
       private int GetEpisodeNumberFrom(string SeasonAndEpisodeIdentifier)
       {
          return int.Parse(SeasonAndEpisodeIdentifier.Substring(4, 2));

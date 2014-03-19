@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Common.Core;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -11,84 +12,70 @@ using TVShowRename.Business.Entities;
 
 namespace TVShowRename.Client
 {
-    public class MainController : Controller
-    {
-        private const string TitleGroup = "Title";
-        private const string InfoGroup = "Info";
+   public class MainController : Controller
+   {
+      private const string TitleGroup = "Title";
+      private const string InfoGroup = "Info";
 
-        private IMainView _view;
+      private IMainView _view;
 
-        private Regex _showRegex = new Regex(@"(?<" + TitleGroup + @">.*?)\.(?<" + InfoGroup + @">[s]\d{2}[e]\d{2})(.*)", 
-                                            RegexOptions.IgnoreCase | RegexOptions.Compiled);
+      //private Regex _showRegex = new Regex(@"(?<" + TitleGroup + @">.*?)\.(?<" + InfoGroup + @">[s]\d{2}[e]\d{2})(.*)", 
+      //RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
-        private string _currentfile;
+      private string _currentfile;
 
-        public MainController(IMainView view)
-        {
-            _view = view;
-            view.SetController(this);
-        }
+      public MainController(IMainView view)
+      {
+         _view = view;
+         view.SetController(this);
+      }
 
 
-        public void Rename(string[] filesToRename)
-        {
-            if ( filesToRename == null || filesToRename.Length == 0)
+      public void Rename(string[] filesToRename)
+      {
+         if ( filesToRename == null || filesToRename.Length == 0 )
+         {
+            throw new ArgumentException("No files to rename");
+         }
+
+         List<string> invalidFiles = new List<string>();
+
+
+
+         foreach ( string file in filesToRename )
+         {
+            // Loop through each parser and check if it can parse the input file.
+            foreach (ITVShowParser parser in _serviceFactory.GetServiceManagers<ITVShowParser>())
             {
-                throw new ArgumentException("No files to rename");
+               if ( !parser.CanParse(file) )
+               {
+                  // Maybe the next parser will be able to parse the file.
+                  continue;
+               }
+               else
+               {
+                  TVShowFile tvShowFile = parser.Parse(file);
+                  ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
+                  try
+                  {
+                     IEnumerable<Show> results = tvdbManager.GetShowsByTitle(tvShowFile.ShowName);
+                     _view.AddShowResults(results);
+                  }
+                  catch
+                  {
+                     break;
+                  }
+                  break;
+               }
             }
+         }
 
-            // Some of the input files may not be in the correct format to parse
-            // TODO: To allow more input formats, consider creating a parsing interface to check file input formats
-            List<string> invalidFiles = new List<string>();
-            foreach (string file in filesToRename)
-            {
-                // Check which files match
-                if (!_showRegex.IsMatch(file))
-                {
-                    invalidFiles.Add(file);
-                }
-            }
+      }
 
-            if (invalidFiles.Count > 0)
-            {
-                StringBuilder sb = new StringBuilder(String.Empty);
-                foreach (string invalidFile in invalidFiles)
-                {
-                    sb.Append(String.Format("- {0}{1}", invalidFile, Environment.NewLine));
-                }
+      private void Rename(int showId)
+      {
 
-                // Let the user know that some files will not be renamed.
-                MessageBox.Show(String.Format("The following files will not be renamed{0}{1}", Environment.NewLine, sb.ToString()),
-                                "Input format error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
+      }
 
-            foreach (string file in filesToRename.Where(input => _showRegex.IsMatch(input)))
-            {
-                _currentfile = file;
-                Match match = _showRegex.Match(file);
-
-                string showTitle = Path.GetFileName(match.Groups[TitleGroup].Value).Replace('.', ' ');
-                string Info = match.Groups[InfoGroup].Value;
-                string extension = Path.GetExtension(file);
-
-                ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
-                try
-                {
-                    IEnumerable<Show> results = tvdbManager.GetShowsByTitle(showTitle);
-                    _view.AddShowResults(results);
-                }
-                catch
-                {
-                    continue;
-                }
-            }
-
-        }
-
-        private void Rename(int showId)
-        {
-            
-        }
-
-    }
+   }
 }
