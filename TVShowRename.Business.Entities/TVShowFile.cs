@@ -11,11 +11,11 @@ namespace TVShowRename.Business.Entities
    {
       public string Filename { get; set; }
 
-      public string Show { get; set; }
+      public string ShowName { get; set; }
 
-      public int Season { get; set; }
+      public int SeasonNumber { get; set; }
 
-      public int Episode { get; set; }
+      public int EpisodeNumber { get; set; }
 
       public string Extension
       {
@@ -35,9 +35,9 @@ namespace TVShowRename.Business.Entities
       public TVShowFile(string filename, string title, int season, int episode)
       {
          Filename = filename;
-         Show = title;
-         Season = season;
-         Episode = episode;
+         ShowName = title;
+         SeasonNumber = season;
+         EpisodeNumber = episode;
       }
    }
 }
