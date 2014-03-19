@@ -24,5 +24,18 @@ namespace TVShowRename.Business.Managers
                 throw;
             }
         }
+
+
+        IEnumerable<T> IServiceFactory.GetServiceManagers<T>()
+        {
+           try
+           {
+              return ObjectBase.Container.GetExportedValues<T>();
+           }
+           catch
+           {
+              throw;
+           }
+        }
     }
 }
