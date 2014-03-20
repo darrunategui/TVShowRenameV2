@@ -50,10 +50,10 @@ namespace TVShowRename.Client
                }
                else
                {
-                  TVShowFile tvShowFile = parser.Parse(file);
-                  ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
                   try
                   {
+                     TVShowFile tvShowFile = parser.Parse(file);
+                     ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
                      IEnumerable<Show> results = tvdbManager.GetShowsByTitle(tvShowFile.ShowName);
                      InterpretShowResults(results);
                   }
@@ -76,6 +76,8 @@ namespace TVShowRename.Client
                break;
             case 1:
                // one result... use the show ID to rename the file.
+               Show show = results.First();
+               Rename(show);
                break;
             default:
                // More than one result... display the results in the view.
@@ -84,9 +86,25 @@ namespace TVShowRename.Client
          }
       }
 
-      private void Rename(int showId)
+      private void Rename(Show show) //TODO: need to find a way to save the TVShowFile info and use it in this method.
       {
+         // TODO: maybe I should have a rename controller that is initialized witht he TVShowFile that takes care of everything.
+         // TODO: A new form that lets the user choose the tv show from the list might be a good idea. 
+         // maybe even a modal form or some async task to process one file at a time.
+         if ( showId == null || showId < 0 )
+         {
+            throw new ArgumentException("Show ID must not be null or less than zero.");
+         }
 
+         try
+         {
+            ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
+            IEnumerable<Episode> episodes = tvdbManager.GetEpisodesByShowId(showId);
+         }
+         catch
+         {
+            
+         }
       }
 
    }

@@ -29,6 +29,7 @@ namespace TVShowRename.Client
 
         public void AddShowResults(IEnumerable<Show> shows)
         {
+           lstShowResults.Items.Clear();
             foreach (Show show in shows)
             {
                 ListViewItem item = new ListViewItem(new string[] { show.Title, show.Network, show.Description });
