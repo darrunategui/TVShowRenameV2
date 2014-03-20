@@ -38,10 +38,6 @@ namespace TVShowRename.Client
             throw new ArgumentException("No files to rename");
          }
 
-         List<string> invalidFiles = new List<string>();
-
-
-
          foreach ( string file in filesToRename )
          {
             // Loop through each parser and check if it can parse the input file.
@@ -59,7 +55,7 @@ namespace TVShowRename.Client
                   try
                   {
                      IEnumerable<Show> results = tvdbManager.GetShowsByTitle(tvShowFile.ShowName);
-                     _view.AddShowResults(results);
+                     InterpretShowResults(results);
                   }
                   catch
                   {
@@ -69,7 +65,23 @@ namespace TVShowRename.Client
                }
             }
          }
+      }
 
+      private void InterpretShowResults(IEnumerable<Show> results)
+      {
+         switch ( results.Count() )
+         {
+            case 0:
+               // no results... to bad..
+               break;
+            case 1:
+               // one result... use the show ID to rename the file.
+               break;
+            default:
+               // More than one result... display the results in the view.
+               _view.AddShowResults(results);
+               break;
+         }
       }
 
       private void Rename(int showId)
