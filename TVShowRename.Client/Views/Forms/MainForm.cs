@@ -35,6 +35,10 @@ namespace TVShowRename.Client
                 item.Tag = show;
                 lstShowResults.Items.Add(item);
             }
+            foreach (ColumnHeader column in lstShowResults.Columns)
+            {
+               column.Width = -2;               
+            }
         }
         #endregion
 
