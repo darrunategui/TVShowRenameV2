@@ -28,7 +28,7 @@ namespace TVShowRename.Business.Managers
         /// </summary>
         private const string mirror = "http://thetvdb.com/";
 
-        public IEnumerable<Show> GetShowsByTitle(string title)
+        public async Task<IEnumerable<Show>> GetShowsByTitle(string title)
         {
             if ( String.IsNullOrEmpty(title) )
             {
@@ -39,7 +39,7 @@ namespace TVShowRename.Business.Managers
             string xml;
             using (WebClient client = new WebClient())
             {
-                xml = client.DownloadString(address);
+                xml = await client.DownloadStringTaskAsync(address);
             }
 
             // Make sure the downloaded data is valid.

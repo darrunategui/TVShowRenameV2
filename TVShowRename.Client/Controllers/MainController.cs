@@ -18,10 +18,6 @@ namespace TVShowRename.Client
       private const string InfoGroup = "Info";
 
       private IMainView _view;
-
-      //private Regex _showRegex = new Regex(@"(?<" + TitleGroup + @">.*?)\.(?<" + InfoGroup + @">[s]\d{2}[e]\d{2})(.*)", 
-      //RegexOptions.IgnoreCase | RegexOptions.Compiled);
-
       private string _currentfile;
 
       public MainController(IMainView view)
@@ -30,39 +26,38 @@ namespace TVShowRename.Client
          view.SetController(this);
       }
 
-
-      public void Rename(string[] filesToRename)
+      internal async Task Rename(string file)
       {
-         if ( filesToRename == null || filesToRename.Length == 0 )
+         // TODO: set status text to parsing
+         // Loop through each parser and check if it can parse the input file.
+         foreach (ITVShowParser parser in _serviceFactory.GetServiceManagers<ITVShowParser>())
          {
-            throw new ArgumentException("No files to rename");
-         }
-
-         foreach ( string file in filesToRename )
-         {
-            // Loop through each parser and check if it can parse the input file.
-            foreach (ITVShowParser parser in _serviceFactory.GetServiceManagers<ITVShowParser>())
+            if (!parser.CanParse(file))
             {
-               if ( !parser.CanParse(file) )
+               // Maybe the next parser will be able to parse the file.
+               continue;
+            }
+            else
+            {
+               try
                {
-                  // Maybe the next parser will be able to parse the file.
-                  continue;
+                  // TODO: set status text to renaming...
+                  TVShowFile tvShowFile = parser.Parse(file);
+                  ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
+                  // TODO: set status text to searching for show.
+                  Task<IEnumerable<Show>> showsTaskResult = tvdbManager.GetShowsByTitle(tvShowFile.ShowName);
+                  // TODO: downloading show data..
+                  IEnumerable<Show> results = await showsTaskResult;
+
+                  InterpretShowResults(results);
                }
-               else
+               catch
                {
-                  try
-                  {
-                     TVShowFile tvShowFile = parser.Parse(file);
-                     ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
-                     IEnumerable<Show> results = tvdbManager.GetShowsByTitle(tvShowFile.ShowName);
-                     InterpretShowResults(results);
-                  }
-                  catch
-                  {
-                     break;
-                  }
+                  // TODO: Set status text to error
                   break;
                }
+               // TODO: I believe here would be the successfull case so display some success message.
+               break;
             }
          }
       }
@@ -77,35 +72,17 @@ namespace TVShowRename.Client
             case 1:
                // one result... use the show ID to rename the file.
                Show show = results.First();
-               Rename(show);
+               //Rename(show);
                break;
             default:
+               // TODO: create the ShowsFrom to display the results.
                // More than one result... display the results in the view.
                _view.AddShowResults(results);
                break;
          }
       }
 
-      private void Rename(Show show) //TODO: need to find a way to save the TVShowFile info and use it in this method.
-      {
-         // TODO: maybe I should have a rename controller that is initialized witht he TVShowFile that takes care of everything.
-         // TODO: A new form that lets the user choose the tv show from the list might be a good idea. 
-         // maybe even a modal form or some async task to process one file at a time.
-         if ( showId == null || showId < 0 )
-         {
-            throw new ArgumentException("Show ID must not be null or less than zero.");
-         }
 
-         try
-         {
-            ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
-            IEnumerable<Episode> episodes = tvdbManager.GetEpisodesByShowId(showId);
-         }
-         catch
-         {
-            
-         }
-      }
-
+      
    }
 }

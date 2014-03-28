@@ -50,14 +50,26 @@ namespace TVShowRename.Client
         }
         #endregion
 
-        private void MainForm_DragDrop(object sender, DragEventArgs e)
+        private async void MainForm_DragDrop(object sender, DragEventArgs e)
         {
-            if (e.Data.GetDataPresent(DataFormats.FileDrop))
-            {
-                string[] droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
-                _controller.Rename(droppedFiles);
-                
-            }
+           if (e.Data.GetDataPresent(DataFormats.FileDrop))
+           {
+              string[] droppedFiles = (string[])e.Data.GetData(DataFormats.FileDrop);
+              if (droppedFiles == null || droppedFiles.Length == 0)
+              {
+                 // TODO: show some error message.
+                 return;
+              }
+              else
+              {
+                 foreach (string file in droppedFiles.Where(a => !String.IsNullOrEmpty(a)))
+                 {
+                    await _controller.Rename(file);
+                 }
+              }
+
+              //TODO: show that the show is being processed.
+           }
         }
 
         private void MainForm_DragEnter(object sender, DragEventArgs e)

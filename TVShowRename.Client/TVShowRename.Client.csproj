@@ -46,7 +46,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="Controllers\RenameController.cs" />
+    <Compile Include="Controllers\ShowsController.cs" />
+    <Compile Include="Views\Forms\ShowsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Forms\ShowsForm.Designer.cs">
+      <DependentUpon>ShowsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Views\Interfaces\IMainView.cs" />
+    <Compile Include="Views\Interfaces\IShowsView.cs" />
     <Compile Include="Views\Interfaces\IView.cs" />
     <Compile Include="Controllers\MainController.cs" />
     <Compile Include="Views\Forms\MainForm.cs">
@@ -68,6 +77,9 @@
     </Compile>
     <EmbeddedResource Include="Views\Forms\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Forms\ShowsForm.resx">
+      <DependentUpon>ShowsForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
