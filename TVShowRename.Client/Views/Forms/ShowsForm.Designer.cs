@@ -32,6 +32,7 @@
          this.lstClmTitle = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
          this.lstClmNetwork = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
          this.lstClmDescription = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+         this.lblChooseShow = new System.Windows.Forms.Label();
          this.SuspendLayout();
          // 
          // lstShows
@@ -67,16 +68,27 @@
          this.lstClmDescription.Text = "Description";
          this.lstClmDescription.Width = 310;
          // 
+         // lblChooseShow
+         // 
+         this.lblChooseShow.AutoSize = true;
+         this.lblChooseShow.Location = new System.Drawing.Point(13, 26);
+         this.lblChooseShow.Name = "lblChooseShow";
+         this.lblChooseShow.Size = new System.Drawing.Size(212, 25);
+         this.lblChooseShow.TabIndex = 1;
+         this.lblChooseShow.Text = "Choose a show label";
+         // 
          // ShowsForm
          // 
          this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
          this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
          this.ClientSize = new System.Drawing.Size(640, 531);
+         this.Controls.Add(this.lblChooseShow);
          this.Controls.Add(this.lstShows);
          this.Name = "ShowsForm";
-         this.Text = "ShowsForm";
+         this.Text = "Search Results";
          this.Load += new System.EventHandler(this.ShowsForm_Load);
          this.ResumeLayout(false);
+         this.PerformLayout();
 
       }
 
@@ -86,5 +98,6 @@
       private System.Windows.Forms.ColumnHeader lstClmTitle;
       private System.Windows.Forms.ColumnHeader lstClmNetwork;
       private System.Windows.Forms.ColumnHeader lstClmDescription;
+      private System.Windows.Forms.Label lblChooseShow;
    }
 }

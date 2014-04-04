@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using TVShowRename.Business.Contracts;
 using TVShowRename.Business.Entities;
+using TVShowRename.Client.Views.Forms;
 
-namespace TVShowRename.Client
+namespace TVShowRename.Client.Controllers
 {
    public class MainController : Controller
    {
@@ -29,6 +30,8 @@ namespace TVShowRename.Client
       internal async Task Rename(string file)
       {
          // TODO: set status text to parsing
+         SetStatus("Parsing input file.");
+
          // Loop through each parser and check if it can parse the input file.
          foreach (ITVShowParser parser in _serviceFactory.GetServiceManagers<ITVShowParser>())
          {
@@ -39,17 +42,19 @@ namespace TVShowRename.Client
             }
             else
             {
+               SetStatus("Successful parser found.");
                try
                {
-                  // TODO: set status text to renaming...
                   TVShowFile tvShowFile = parser.Parse(file);
                   ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
-                  // TODO: set status text to searching for show.
+
+                  SetStatus(String.Format("Searching for a show with the name {0}", tvShowFile.ShowName));
                   Task<IEnumerable<Show>> showsTaskResult = tvdbManager.GetShowsByTitle(tvShowFile.ShowName);
                   // TODO: downloading show data..
+                  // TODO: update the progress bar to look like work is being done...
                   IEnumerable<Show> results = await showsTaskResult;
 
-                  InterpretShowResults(results);
+                  InterpretShowResults(results, tvShowFile);
                }
                catch
                {
@@ -62,7 +67,7 @@ namespace TVShowRename.Client
          }
       }
 
-      private void InterpretShowResults(IEnumerable<Show> results)
+      private void InterpretShowResults(IEnumerable<Show> results, TVShowFile fileToRename)
       {
          switch ( results.Count() )
          {
@@ -76,13 +81,23 @@ namespace TVShowRename.Client
                break;
             default:
                // TODO: create the ShowsFrom to display the results.
-               // More than one result... display the results in the view.
-               _view.AddShowResults(results);
+               using (ShowsForm form = new ShowsForm())
+               {
+                  ShowsController controller = new ShowsController(form, fileToRename, results);
+                  if ( form.ShowDialog() != DialogResult.OK )
+                  {
+                     // TODO: error case.
+                  }
+
+               }
                break;
          }
       }
 
-
+      private void SetStatus(string text)
+      {
+         _view.Status = text;
+      }
       
    }
 }

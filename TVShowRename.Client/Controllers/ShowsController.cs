@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using TVShowRename.Business.Contracts;
 using TVShowRename.Business.Entities;
 using TVShowRename.Client.Views.Interfaces;
@@ -13,20 +14,48 @@ namespace TVShowRename.Client.Controllers
 {
    public class ShowsController : Controller
    {
+      #region Fields
+      /// <summary>
+      /// Reference to the view.
+      /// </summary>
       private IShowsView _view;
+      /// <summary>
+      /// Represents the file to rename.
+      /// </summary>
       private TVShowFile _fileToRename;
+      /// <summary>
+      /// Represents the possible shows to choose from.
+      /// </summary>
       private IEnumerable<Show> _shows;
+      #endregion
 
+      /// <summary>
+      /// Initializes a new instance of the ShowsController object.
+      /// </summary>
+      /// <param name="view">The associated view for this controller.</param>
+      /// <param name="fileToRename">The file to rename.</param>
+      /// <param name="shows">The show results to display on the view.</param>
       public ShowsController(IShowsView view, TVShowFile fileToRename, IEnumerable<Show> shows)
       {
          _view = view;
+         _view.SetController(this);
+         _fileToRename = fileToRename;
+         _shows = shows;
       }
 
+      /// <summary>
+      /// Initializes the view with possible show results.
+      /// </summary>
       internal void InitializeView()
       {
          _view.AddShows(_shows);
+         _view.Label = "Please choose the intended show...";
       }
 
+      /// <summary>
+      /// Renames the file that given to this object on initialization.
+      /// </summary>
+      /// <param name="show"></param>
       internal void Rename(Show show)
       {
          try
@@ -35,10 +64,10 @@ namespace TVShowRename.Client.Controllers
             // TODO: downloading episode data...
             IEnumerable<Episode> episodes = tvdbManager.GetEpisodesByShowId(show.Id);
 
-            Episode episode = episodes
-                              .Where(e =>
-                                 e.Season == _fileToRename.SeasonNumber &&
-                                 e.Number == _fileToRename.EpisodeNumber).FirstOrDefault();
+            Episode episode = (from e in episodes
+                               where e.Season == _fileToRename.SeasonNumber &&
+                                     e.Number == _fileToRename.EpisodeNumber
+                               select e).FirstOrDefault();
             if ( episode == null )
             {
                // TODO: should be some way to determine if it was successfull or not.
@@ -58,8 +87,10 @@ namespace TVShowRename.Client.Controllers
             File.Move(_fileToRename.Filename, String.Format(@"{0}\{1}", Directory.GetParent(_fileToRename.Filename), newFilename));
             // TODO: I want to know if any exception occurs. Log it out or even just show a message box for testing.
          }
-         catch
-         { }
+         catch ( Exception ex )
+         {
+            MessageBox.Show(ex.Message);
+         }
       }
 
    }

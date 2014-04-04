@@ -40,6 +40,12 @@ namespace TVShowRename.Client.Views.Forms
       #endregion
 
       #region IShowsView methods
+
+      public string Label
+      {
+         set { lblChooseShow.Text = value; }
+      }
+
       public void SetController(Controller controller)
       {
          _controller = (ShowsController)controller;
@@ -60,6 +66,8 @@ namespace TVShowRename.Client.Views.Forms
          }
       }
       #endregion
+
+
 
       
    }

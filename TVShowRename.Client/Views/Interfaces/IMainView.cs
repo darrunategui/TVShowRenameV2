@@ -9,6 +9,6 @@ namespace TVShowRename.Client
 {
     public interface IMainView : IView
     {
-        void AddShowResults(IEnumerable<Show> shows);
+       string Status { set; }
     }
 }

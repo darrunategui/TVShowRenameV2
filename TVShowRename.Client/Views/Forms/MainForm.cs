@@ -9,8 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TVShowRename.Business.Entities;
+using TVShowRename.Client.Controllers;
 
-namespace TVShowRename.Client
+namespace TVShowRename.Client.Views.Forms
 {
     public partial class MainForm : Form, IMainView, ISingletonEnforcer
     {
@@ -22,24 +23,13 @@ namespace TVShowRename.Client
         }
 
         #region IMainView methods
+        public string Status 
+        {
+           set { lblStatus.Text = value; }
+        }
         public void SetController(Controller controller)
         {
             _controller = (MainController)controller;
-        }
-
-        public void AddShowResults(IEnumerable<Show> shows)
-        {
-           lstShowResults.Items.Clear();
-            foreach (Show show in shows)
-            {
-                ListViewItem item = new ListViewItem(new string[] { show.Title, show.Network, show.Description });
-                item.Tag = show;
-                lstShowResults.Items.Add(item);
-            }
-            foreach (ColumnHeader column in lstShowResults.Columns)
-            {
-               column.Width = -2;               
-            }
         }
         #endregion
 

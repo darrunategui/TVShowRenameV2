@@ -11,7 +11,7 @@ using TVShowRename.Business.Entities;
 
 namespace TVShowRename.Business.Managers
 {
-   [Export(typeof(ITVDBService))]
+   [Export(typeof(ITVShowParser))]
    [PartCreationPolicy(CreationPolicy.NonShared)]
    public class TVShowParser : ITVShowParser
    {

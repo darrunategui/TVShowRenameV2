@@ -9,6 +9,7 @@ namespace TVShowRename.Client.Views.Interfaces
 {
    public interface IShowsView : IView
    {
+      string Label { set; }
       void AddShows(IEnumerable<Show> shows);
    }
 }

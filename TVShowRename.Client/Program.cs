@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TVShowRename.Business.Bootstrapper;
+using TVShowRename.Client.Controllers;
+using TVShowRename.Client.Views.Forms;
 
 namespace TVShowRename.Client
 {
