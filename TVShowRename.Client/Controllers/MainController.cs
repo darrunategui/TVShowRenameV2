@@ -53,6 +53,7 @@ namespace TVShowRename.Client.Controllers
                   // TODO: downloading show data..
                   // TODO: update the progress bar to look like work is being done...
                   IEnumerable<Show> results = await showsTaskResult;
+                  // TODO: make sure the progress bar finishes
 
                   InterpretShowResults(results, tvShowFile);
                }
@@ -81,6 +82,7 @@ namespace TVShowRename.Client.Controllers
                break;
             default:
                // TODO: create the ShowsFrom to display the results.
+               SetStatus(String.Format("Multiple shows with the name {0} were found. Select the intended show to continue...", fileToRename.ShowName));
                using (ShowsForm form = new ShowsForm())
                {
                   ShowsController controller = new ShowsController(form, fileToRename, results);

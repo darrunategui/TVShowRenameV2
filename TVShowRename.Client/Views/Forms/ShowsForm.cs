@@ -34,6 +34,7 @@ namespace TVShowRename.Client.Views.Forms
          if ( item != null )
          {
             // TODO: send the tag to the controller to rename.
+            _controller.Rename(item.Tag as Show);
             Close();
          }
       }
