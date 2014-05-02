@@ -7,7 +7,7 @@ namespace TVShowRename.Business.Managers.UnitTests
    public class TVShowParserTests
    {
       [TestMethod]
-      [ExpectedException(typeof(ArgumentNullException))]
+      [ExpectedException(typeof(ArgumentException))]
       public void CanParse_Null_fileName()
       {
       }

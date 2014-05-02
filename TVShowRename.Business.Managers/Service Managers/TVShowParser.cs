@@ -59,6 +59,10 @@ namespace TVShowRename.Business.Managers
       /// <returns>true if the filename can be parsed; otherwise, false.</returns>
       public bool CanParse(string filename)
       {
+         if ( String.IsNullOrEmpty(filename))
+         {
+            throw new ArgumentException("Parameter cannot be null or empty.", "filename");
+         }
          return _showRegex.IsMatch(filename);
       }
 
