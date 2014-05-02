@@ -56,6 +56,7 @@ namespace TVShowRename.Client.Controllers
       }
       #endregion
 
+      #region public methods
       /// <summary>
       /// Initializes the view with possible show results.
       /// </summary>
@@ -107,7 +108,9 @@ namespace TVShowRename.Client.Controllers
             MessageBox.Show(ex.Message);
          }
       }
+      #endregion
 
+      #region private methods
       private void UpdateStatus(string status)
       {
          // TODO: check if the status should be updated (is there a view to update or not).
@@ -117,6 +120,7 @@ namespace TVShowRename.Client.Controllers
          }
          // Continue..
       }
+      #endregion
 
    }
 }
