@@ -19,7 +19,6 @@ namespace TVShowRename.Client.Controllers
       private const string InfoGroup = "Info";
 
       private IMainView _view;
-      private string _currentfile;
 
       public MainController(IMainView view)
       {
@@ -70,29 +69,36 @@ namespace TVShowRename.Client.Controllers
 
       private void InterpretShowResults(IEnumerable<Show> results, TVShowFile fileToRename)
       {
-         switch ( results.Count() )
+         switch (results.Count())
          {
             case 0:
-               // no results... to bad..
-               break;
-            case 1:
-               // one result... use the show ID to rename the file.
-               Show show = results.First();
-               //Rename(show);
-               break;
-            default:
-               // TODO: create the ShowsFrom to display the results.
-               SetStatus(String.Format("Multiple shows with the name {0} were found. Select the intended show to continue...", fileToRename.ShowName));
-               using (ShowsForm form = new ShowsForm())
                {
-                  ShowsController controller = new ShowsController(form, fileToRename, results);
-                  if ( form.ShowDialog() != DialogResult.OK )
-                  {
-                     // TODO: error case.
-                  }
-
+                  // no results... to bad..
+                  break;
                }
-               break;
+            case 1:
+               {
+                  // one result... use the show ID to rename the file.
+                  Show show = results.First();
+                  ShowsController controller = new ShowsController(fileToRename);
+                  controller.Rename(show);
+                  break;
+               }
+            default:
+               {
+                  // TODO: create the ShowsFrom to display the results.
+                  SetStatus(String.Format("Multiple shows with the name {0} were found. Select the intended show to continue...", fileToRename.ShowName));
+                  using (ShowsForm form = new ShowsForm())
+                  {
+                     ShowsController controller = new ShowsController(form, fileToRename, results);
+                     if (form.ShowDialog() != DialogResult.OK)
+                     {
+                        // TODO: error case.
+                     }
+
+                  }
+                  break;
+               }
          }
       }
 
@@ -100,6 +106,6 @@ namespace TVShowRename.Client.Controllers
       {
          _view.Status = text;
       }
-      
+
    }
 }
