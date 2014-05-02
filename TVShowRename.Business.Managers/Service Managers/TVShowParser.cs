@@ -24,6 +24,9 @@ namespace TVShowRename.Business.Managers
       /// </summary>
       private Regex _showRegex = new Regex(@"(?<" + TitleGroup + @">.*?)\.(?<" + InfoGroup + @">[s]\d{2}[e]\d{2})(.*)",
                                           RegexOptions.IgnoreCase | RegexOptions.Compiled);
+      // TODO: change the regex to accomodate shows that have episodes in the 100's (3 digits) or ( 1 digit).
+      // Add a group for the season and the episode.
+
 
       /// <summary>
       /// Parses the given filename.
