@@ -32,16 +32,19 @@ namespace TVShowRename.Business.Entities
 
       public string NumberAsString()
       {
-         return (Number.ToString().Length == 1) ?
-            String.Format("0{0}", Number) :
-            Number.ToString();
+         return ToTwoDigitString(Number);
       }
 
       public string SeasonAsString()
       {
-         return (Season.ToString().Length == 1) ?
-            String.Format("0{0}", Season) :
-            Season.ToString();
+         return ToTwoDigitString(Season);
+      }
+
+      private string ToTwoDigitString(int input)
+      {
+         return (input.ToString().Length == 1) ?
+            String.Format("0{0}", input) :
+            input.ToString();
       }
    }
 }
