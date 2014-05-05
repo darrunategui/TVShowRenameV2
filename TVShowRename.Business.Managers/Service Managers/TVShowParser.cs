@@ -17,6 +17,8 @@ namespace TVShowRename.Business.Managers
    {
       private const string TitleGroup = "Title";
       private const string InfoGroup = "Info";
+      private const string SeasonGroup = "Season";
+      private const string EpisodeGroup = "Episode";
 
       /// <summary>
       /// To match tv shows with the following format: House.Of.Cards.S01E04.*****.mkv

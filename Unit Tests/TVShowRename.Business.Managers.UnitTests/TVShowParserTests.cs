@@ -71,12 +71,12 @@ namespace TVShowRename.Business.Managers.UnitTests
       }
 
       /// <summary>
-      /// filename format Test.S01E101.mkv
+      /// filename format Test.S101E101.mkv
       /// </summary>
       [TestMethod]
       public void CanParse_valid4_fileName()
       {
-         string filename = @"Test.S01E101.HDTV.mkv";
+         string filename = @"Test.S101E101.HDTV.mkv";
          bool canParse = _parser.CanParse(filename);
          Assert.IsTrue(canParse);
       }
