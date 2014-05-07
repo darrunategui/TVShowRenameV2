@@ -16,7 +16,6 @@ namespace TVShowRename.Business.Managers
    public class TVShowParser : ITVShowParser
    {
       private const string TitleGroup = "Title";
-      private const string InfoGroup = "Info";
       private const string SeasonGroup = "Season";
       private const string EpisodeGroup = "Episode";
 
@@ -38,7 +37,6 @@ namespace TVShowRename.Business.Managers
          {
             Match match = _showRegex.Match(filename);
             string showTitle = Path.GetFileName(match.Groups[TitleGroup].Value).Replace('.', ' ');
-            string info = match.Groups[InfoGroup].Value;
             int season = int.Parse(match.Groups[SeasonGroup].Value);
             int episode = int.Parse(match.Groups[EpisodeGroup].Value);
 
