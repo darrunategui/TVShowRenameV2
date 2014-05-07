@@ -24,11 +24,8 @@ namespace TVShowRename.Business.Managers
       /// To match tv shows with the following format: House.Of.Cards.S01E04.*****.mkv
       /// &lt;Name of show (period delimited)&gt;.&lt;season &amp; episode #&gt;.&lt;anything else&gt;.&lt;file extension&gt;
       /// </summary>
-      private Regex _showRegex = new Regex(@"(?<" + TitleGroup + @">.*?)\.(?<" + InfoGroup + @">[s]\d{2}[e]\d{2})(.*)",
+      private Regex _showRegex = new Regex(@"(?<" + TitleGroup + @">.*?)\.[s](?<" + SeasonGroup + @">\d+)[e](?<" + EpisodeGroup + @">\d+)(.*)",
                                           RegexOptions.IgnoreCase | RegexOptions.Compiled);
-      // TODO: change the regex to accomodate shows that have episodes in the 100's (3 digits) or ( 1 digit).
-      // Add a group for the season and the episode.
-
 
       /// <summary>
       /// Parses the given filename.
@@ -42,8 +39,8 @@ namespace TVShowRename.Business.Managers
             Match match = _showRegex.Match(filename);
             string showTitle = Path.GetFileName(match.Groups[TitleGroup].Value).Replace('.', ' ');
             string info = match.Groups[InfoGroup].Value;
-            int season = GetSeasonNumberFrom(info);
-            int episode = GetEpisodeNumberFrom(info);
+            int season = int.Parse(match.Groups[SeasonGroup].Value);
+            int episode = int.Parse(match.Groups[EpisodeGroup].Value);
 
             TVShowFile show = new TVShowFile(filename, showTitle, season, episode);
             return show;
@@ -66,28 +63,6 @@ namespace TVShowRename.Business.Managers
             throw new ArgumentException("Parameter cannot be null or empty.", "filename");
          }
          return _showRegex.IsMatch(filename);
-      }
-
-
-
-      /// <summary>
-      /// Gets the season number from the Season And Episode Identifier.
-      /// </summary>
-      /// <param name="SeasonAndEpisodeIdentifier">The identifier</param>
-      /// <returns>The season number.</returns>
-      private int GetSeasonNumberFrom(string SeasonAndEpisodeIdentifier)
-      {
-         return int.Parse(SeasonAndEpisodeIdentifier.Substring(1, 2));
-      }
-
-      /// <summary>
-      /// Gets the episode number from the Season And Episode Identifier.
-      /// </summary>
-      /// <param name="SeasonAndEpisodeIdentifier"></param>
-      /// <returns>The episode number.</returns>
-      private int GetEpisodeNumberFrom(string SeasonAndEpisodeIdentifier)
-      {
-         return int.Parse(SeasonAndEpisodeIdentifier.Substring(4, 2));
       }
 
    }
