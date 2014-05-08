@@ -27,8 +27,7 @@ namespace TVShowRename.Business.Managers.UnitTests
 
          try
          {
-            if (_parser.CanParse(filename))
-            { }
+            _parser.CanParse(filename);
          }
          catch (ArgumentException ex)
          {
@@ -86,7 +85,7 @@ namespace TVShowRename.Business.Managers.UnitTests
       /// No title - .S01E01.mkv
       /// </summary>
       [TestMethod]
-      public void CanParse_Empty_fileName_CantParse()
+      public void CanParse_Invalid_fileName_CantParse()
       {
          string filename = @".S01E01.HDTV.mkv";
          bool canParse = _parser.CanParse(filename);
@@ -110,6 +109,20 @@ namespace TVShowRename.Business.Managers.UnitTests
          Assert.AreEqual(season, file.SeasonNumber);
          Assert.AreEqual(_showName, file.ShowName);
          Assert.AreEqual(filename, file.Filename);
+      }
+
+      [TestMethod]
+      [ExpectedException(typeof(InvalidOperationException))]
+      public void Parse_Invalid_fileName_Throws()
+      {
+         try
+         {
+            _parser.Parse("invalid filename.");
+         }
+         catch
+         {
+            throw;
+         }
       }
    }
 }

@@ -33,20 +33,23 @@ namespace TVShowRename.Business.Managers
       /// <returns>an object containing the important information parsed from the filename.</returns>
       public TVShowFile Parse(string filename)
       {
-         if (CanParse(filename))
+         if (String.IsNullOrEmpty(filename))
          {
-            Match match = _showRegex.Match(filename);
-            string showTitle = Path.GetFileName(match.Groups[TitleGroup].Value).Replace('.', ' ');
-            int season = int.Parse(match.Groups[SeasonGroup].Value);
-            int episode = int.Parse(match.Groups[EpisodeGroup].Value);
-
-            TVShowFile show = new TVShowFile(filename, showTitle, season, episode);
-            return show;
+            throw new ArgumentException("Parameter cannot be null of empty.", "filename");
          }
-         else
+
+         if (!CanParse(filename))
          {
             throw new InvalidOperationException("Cannot parse the input file");
          }
+
+         Match match = _showRegex.Match(filename);
+         string showTitle = Path.GetFileName(match.Groups[TitleGroup].Value).Replace('.', ' ');
+         int season = int.Parse(match.Groups[SeasonGroup].Value);
+         int episode = int.Parse(match.Groups[EpisodeGroup].Value);
+
+         TVShowFile show = new TVShowFile(filename, showTitle, season, episode);
+         return show;
       }
 
       /// <summary>
