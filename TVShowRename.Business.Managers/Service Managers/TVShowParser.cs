@@ -23,7 +23,7 @@ namespace TVShowRename.Business.Managers
       /// To match tv shows with the following format: House.Of.Cards.S01E04.*****.mkv
       /// &lt;Name of show (period delimited)&gt;.&lt;season &amp; episode #&gt;.&lt;anything else&gt;.&lt;file extension&gt;
       /// </summary>
-      private Regex _showRegex = new Regex(@"(?<" + TitleGroup + @">.*?)\.[s](?<" + SeasonGroup + @">\d+)[e](?<" + EpisodeGroup + @">\d+)(.*)",
+      private Regex _showRegex = new Regex(@"(?<" + TitleGroup + @">.+?)\.[s](?<" + SeasonGroup + @">\d+)[e](?<" + EpisodeGroup + @">\d+)(.*)",
                                           RegexOptions.IgnoreCase | RegexOptions.Compiled);
 
       /// <summary>

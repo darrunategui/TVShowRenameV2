@@ -68,6 +68,10 @@
       <Project>{f99e9a0c-0744-496a-afb4-95875bba51f6}</Project>
       <Name>TVShowRename.Business.Contracts</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\TVShowRename.Business.Entities\TVShowRename.Business.Entities.csproj">
+      <Project>{93c36b6d-389e-4a72-82e9-fd0df65012bd}</Project>
+      <Name>TVShowRename.Business.Entities</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\TVShowRename.Business.Managers\TVShowRename.Business.Managers.csproj">
       <Project>{2102d1c9-80a1-4524-8051-378df4963ea5}</Project>
       <Name>TVShowRename.Business.Managers</Name>

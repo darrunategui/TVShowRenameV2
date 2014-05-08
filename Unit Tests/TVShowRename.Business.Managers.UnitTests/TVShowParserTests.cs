@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using TVShowRename.Business.Managers;
+using TVShowRename.Business.Entities;
 
 namespace TVShowRename.Business.Managers.UnitTests
 {
@@ -8,7 +9,7 @@ namespace TVShowRename.Business.Managers.UnitTests
    public class TVShowParserTests
    {
       TVShowParser _parser;
-
+      string _showName = "Test";
 
       [TestInitialize]
       public void Initialize()
@@ -18,7 +19,7 @@ namespace TVShowRename.Business.Managers.UnitTests
 
       [TestMethod]
       [ExpectedException(typeof(ArgumentException))]
-      public void CanParse_Null_fileName()
+      public void CanParse_Null_fileName_Throws()
       {
          string filename = null;
          string expectedParamName = "filename";
@@ -41,7 +42,7 @@ namespace TVShowRename.Business.Managers.UnitTests
       /// filename format Test.S01E01.mkv
       /// </summary>
       [TestMethod]
-      public void CanParse_valid1_fileName()
+      public void CanParse_valid1_fileName_CanParse()
       {
          string filename = @"Test.S01E01.HDTV.mkv";
          bool canParse = _parser.CanParse(filename);
@@ -52,7 +53,7 @@ namespace TVShowRename.Business.Managers.UnitTests
       /// filename format Test.S1E01.mkv
       /// </summary>
       [TestMethod]
-      public void CanParse_valid2_fileName()
+      public void CanParse_valid2_fileName_CanParse()
       {
          string filename = @"Test.S1E01.HDTV.mkv";
          bool canParse = _parser.CanParse(filename);
@@ -63,7 +64,7 @@ namespace TVShowRename.Business.Managers.UnitTests
       /// filename format Test.S01E1.mkv
       /// </summary>
       [TestMethod]
-      public void CanParse_valid3_fileName()
+      public void CanParse_valid3_fileName_CanParse()
       {
          string filename = @"Test.S01E1.HDTV.mkv";
          bool canParse = _parser.CanParse(filename);
@@ -74,11 +75,41 @@ namespace TVShowRename.Business.Managers.UnitTests
       /// filename format Test.S101E101.mkv
       /// </summary>
       [TestMethod]
-      public void CanParse_valid4_fileName()
+      public void CanParse_valid4_fileName_CanParse()
       {
          string filename = @"Test.S101E101.HDTV.mkv";
          bool canParse = _parser.CanParse(filename);
          Assert.IsTrue(canParse);
+      }
+
+      /// <summary>
+      /// No title - .S01E01.mkv
+      /// </summary>
+      [TestMethod]
+      public void CanParse_Empty_fileName_CantParse()
+      {
+         string filename = @".S01E01.HDTV.mkv";
+         bool canParse = _parser.CanParse(filename);
+         Assert.IsFalse(canParse);
+      }
+
+      /// <summary>
+      /// Parses the filename Test.S01E01.HDTV.mkv and ensures the parsed values are accurate.
+      /// </summary>
+      [TestMethod]
+      public void Parse_valid1_Parses()
+      {
+         int episode = 1;
+         int season = 1;
+         string episodeString = episode.ToString("00");
+         string seasonString = season.ToString("00");
+         string filename = string.Format("{0}.S{1}E{2}.HDTV.mkv", _showName, seasonString, episodeString);
+         TVShowFile file = _parser.Parse(filename);
+
+         Assert.AreEqual(episode, file.EpisodeNumber);
+         Assert.AreEqual(season, file.SeasonNumber);
+         Assert.AreEqual(_showName, file.ShowName);
+         Assert.AreEqual(filename, file.Filename);
       }
    }
 }
