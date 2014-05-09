@@ -30,6 +30,7 @@ namespace TVShowRename.Client.Controllers
       {
          // TODO: set status text to parsing
          SetStatus("Parsing input file.");
+         _view.VisualizeProgress(true);
 
          // Loop through each parser and check if it can parse the input file.
          foreach (ITVShowParser parser in _serviceFactory.GetServiceManagers<ITVShowParser>())
@@ -47,7 +48,7 @@ namespace TVShowRename.Client.Controllers
                   TVShowFile tvShowFile = parser.Parse(file);
                   ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
 
-                  SetStatus(String.Format("Searching for a show with the name {0}", tvShowFile.ShowName));
+                  SetStatus(String.Format("Searching for a show with the name '{0}'", tvShowFile.ShowName));
                   Task<IEnumerable<Show>> showsTaskResult = tvdbManager.GetShowsByTitle(tvShowFile.ShowName);
                   // TODO: downloading show data..
                   // TODO: update the progress bar to look like work is being done...
@@ -56,15 +57,18 @@ namespace TVShowRename.Client.Controllers
 
                   InterpretShowResults(results, tvShowFile);
                }
-               catch
+               catch (Exception ex)
                {
                   // TODO: Set status text to error
+                  SetStatus(String.Format("An error occured renaming the file. {0}", ex.Message));
                   break;
                }
+
                // TODO: I believe here would be the successfull case so display some success message.
                break;
             }
          }
+         _view.VisualizeProgress(false);
       }
 
       private void InterpretShowResults(IEnumerable<Show> results, TVShowFile fileToRename)

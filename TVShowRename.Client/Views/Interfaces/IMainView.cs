@@ -10,5 +10,7 @@ namespace TVShowRename.Client
     public interface IMainView : IView
     {
        string Status { set; }
+
+       void VisualizeProgress(bool showprogess);
     }
 }

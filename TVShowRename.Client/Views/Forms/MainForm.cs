@@ -27,6 +27,12 @@ namespace TVShowRename.Client.Views.Forms
         {
            set { lblStatus.Text = value; }
         }
+
+        public void VisualizeProgress(bool showprogess)
+        {
+           prgProgress.MarqueeAnimationSpeed = (showprogess) ? 20 : 0;
+        }
+
         public void SetController(Controller controller)
         {
             _controller = (MainController)controller;
