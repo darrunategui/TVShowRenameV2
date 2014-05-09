@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using TVShowRename.Business.Contracts;
 using TVShowRename.Business.Entities;
 using TVShowRename.Client.Views.Forms;
+using TVShowRename.Common.Exceptions;
 
 namespace TVShowRename.Client.Controllers
 {
@@ -85,7 +86,14 @@ namespace TVShowRename.Client.Controllers
                   // one result... use the show ID to rename the file.
                   Show show = results.First();
                   ShowsController controller = new ShowsController(fileToRename);
-                  controller.Rename(show);
+                  try
+                  {
+                     controller.Rename(show);
+                  }
+                  catch (EpisodeNotFoundException)
+                  {
+                     // TODO: Let the user know that the episode data could not be found.
+                  }
                   break;
                }
             default:

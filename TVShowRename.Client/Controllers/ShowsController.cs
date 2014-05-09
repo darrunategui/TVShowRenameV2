@@ -71,9 +71,9 @@ namespace TVShowRename.Client.Controllers
       /// Renames the file that given to this object on initialization.
       /// </summary>
       /// <param name="show"></param>
+      /// <exception cref="EpisodeNotFoundException">Thrown when the searched for episode cannot be found for the given show.</exception>
       internal void Rename(Show show)
       {
-
          ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
          // TODO: downloading episode data...
          IEnumerable<Episode> episodes = tvdbManager.GetEpisodesByShowId(show.Id);
@@ -117,7 +117,7 @@ namespace TVShowRename.Client.Controllers
       private void UpdateStatus(string status)
       {
          // TODO: check if the status should be updated (is there a view to update or not).
-         if ( _view == null )
+         if (_view == null)
          {
             return;
          }

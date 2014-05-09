@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using TVShowRename.Business.Entities;
 using TVShowRename.Client.Controllers;
 using TVShowRename.Client.Views.Interfaces;
+using TVShowRename.Common.Exceptions;
 
 namespace TVShowRename.Client.Views.Forms
 {
@@ -31,17 +32,23 @@ namespace TVShowRename.Client.Views.Forms
       private void lstShows_MouseDoubleClick(object sender, MouseEventArgs e)
       {
          ListViewItem item = lstShows.HitTest(e.Location).Item;
-         if ( item != null )
+         if (item != null)
          {
             // TODO: send the tag to the controller to rename.
-            _controller.Rename(item.Tag as Show);
+            try
+            {
+               _controller.Rename(item.Tag as Show);
+            }
+            catch (EpisodeNotFoundException)
+            {
+               // TODO: let the user know that the episode was not found. // Maybe dialog result
+            }
             Close();
          }
       }
       #endregion
 
       #region IShowsView methods
-
       public string Label
       {
          set { lblChooseShow.Text = value; }
@@ -68,8 +75,5 @@ namespace TVShowRename.Client.Views.Forms
       }
       #endregion
 
-
-
-      
    }
 }
