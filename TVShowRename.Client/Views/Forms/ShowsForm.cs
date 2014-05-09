@@ -34,7 +34,6 @@ namespace TVShowRename.Client.Views.Forms
          ListViewItem item = lstShows.HitTest(e.Location).Item;
          if (item != null)
          {
-            // TODO: send the tag to the controller to rename.
             try
             {
                _controller.Rename(item.Tag as Show);
