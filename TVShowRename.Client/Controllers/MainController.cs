@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using TVShowRename.Business.Contracts;
 using TVShowRename.Business.Entities;
 using TVShowRename.Client.Views.Forms;
+using TVShowRename.Common;
 using TVShowRename.Common.Exceptions;
 
 namespace TVShowRename.Client.Controllers
@@ -79,6 +80,8 @@ namespace TVShowRename.Client.Controllers
             case 0:
                {
                   // no results... to bad..
+                  // Not sure if ths code would ever get reached.
+                  throw new ShowNotFoundException(String.Format("No show with the name '{0}' was found.", fileToRename.ShowName));
                   break;
                }
             case 1:
