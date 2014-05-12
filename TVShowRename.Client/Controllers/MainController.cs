@@ -73,6 +73,45 @@ namespace TVShowRename.Client.Controllers
          _view.VisualizeProgress(false);
       }
 
+      /// <summary>
+      /// Parses the <paramref name="inputFiles"/> parameter.
+      /// </summary>
+      /// <param name="inputFiles">The files to parse.</param>
+      /// <param name="successfullyParsedFiles">When this method returns, contains the files that were successfully parsed and the values of the parsed files.</param>
+      /// <param name="unsuccessfullyParsedFiles">When this method returns, contains the files that were unsuccessfully parsed.</param>
+      internal void ParseTVShows(IEnumerable<string> inputFiles, out Dictionary<string, List<TVShowFile>> successfullyParsedFiles, out List<string> unsuccessfullyParsedFiles)
+      {
+         if (inputFiles == null)
+         {
+            throw new ArgumentNullException("inputFiles");
+         }
+
+         successfullyParsedFiles = new Dictionary<string, List<TVShowFile>>(); // At first, nothing is successfully parsed.
+         unsuccessfullyParsedFiles = new List<string>(inputFiles); // At first, everything is unsuccessful. 
+
+         foreach (string file in inputFiles) // parse each input file
+         {
+            foreach (ITVShowParser parser in _serviceFactory.GetServiceManagers<ITVShowParser>()) // use every parser available.
+            {
+               if (!parser.CanParse(file))
+               {
+                  continue; // Maybe the next parser can parse the file.
+               }
+
+               TVShowFile tvShowFile = parser.Parse(file);
+
+               // Add the file to the successfull list and remove it from the UNsuccessful list.
+               if (!successfullyParsedFiles.ContainsKey(tvShowFile.ShowName))
+               {
+                  successfullyParsedFiles.Add(tvShowFile.ShowName, new List<TVShowFile>());
+               }
+               successfullyParsedFiles[tvShowFile.ShowName].Add(tvShowFile);
+               unsuccessfullyParsedFiles.Remove(file);
+            }
+         }
+      }
+
+
       private void InterpretShowResults(IEnumerable<Show> results, TVShowFile fileToRename)
       {
          switch (results.Count())

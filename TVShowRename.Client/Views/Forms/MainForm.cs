@@ -58,8 +58,18 @@ namespace TVShowRename.Client.Views.Forms
               }
               else
               {
+                 List<string> unsuccessfullyParsedFiles;
+                 Dictionary<string, List<TVShowFile>> successfullyParsedFiles;
+                 _controller.ParseTVShows(droppedFiles, out successfullyParsedFiles, out unsuccessfullyParsedFiles);
+
+
+                 // TODO: show error message with unsuccessful files (show that they will be ignored).
+
                  foreach (string file in droppedFiles.Where(a => !String.IsNullOrEmpty(a)))
                  {
+                    // TODO: I don't like how a new window appears to select the show.
+                    // Create a queue. Add the input files to the queue.
+                    // Then process each item seperately.
                     await _controller.Rename(file);
                  }
               }
