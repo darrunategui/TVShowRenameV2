@@ -66,7 +66,7 @@ namespace TVShowRename.Client.Controllers
                   break;
                }
 
-               // TODO: I believe here would be the successfull case so display some success message.
+               // TODO: I believe here would be the successful case so display some success message.
                break;
             }
          }

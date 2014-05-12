@@ -92,7 +92,7 @@ namespace TVShowRename.Client.Controllers
 
          // TODO: status - building the new filename.
          // TODO: Allow multiple output filename templates
-         string newFilename = String.Format("{0} S{1}E{2} - {3}", show.Title, episode.SeasonAsString(), episode.NumberAsString(), episode.Title);
+         string newFilename = String.Format("{0} S{1}E{2} - {3}.{4}", _fileToRename.ShowName, episode.SeasonAsString(), episode.NumberAsString(), episode.Title, _fileToRename.Extension);
 
          // Strip off any illegal filename characters.
          string invalidChars = new string(Path.GetInvalidFileNameChars());

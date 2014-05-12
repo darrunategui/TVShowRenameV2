@@ -23,7 +23,7 @@ namespace TVShowRename.Business.Entities
          {
             if ( !String.IsNullOrEmpty(Filename) )
             {
-               return Path.GetExtension(Filename);
+               return Path.GetExtension(Filename).Substring(1);
             }
             else
             {

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -44,7 +45,21 @@ namespace TVShowRename.Business.Managers
          }
 
          Match match = _showRegex.Match(filename);
-         string showTitle = Path.GetFileName(match.Groups[TitleGroup].Value).Replace('.', ' ');
+
+         string[] parts = Path.GetFileName(match.Groups[TitleGroup].Value).Split('.');
+         string showTitle = String.Empty;
+         for (int i = 0; i < parts.Length; ++i)
+         {
+            showTitle += (parts[i].Length > 3) ?
+               CultureInfo.CurrentCulture.TextInfo.ToTitleCase(parts[i]) :
+               parts[i].ToLower();
+
+            if ( i != (parts.Length - 1))
+            {
+               showTitle += " ";
+            }
+         }
+
          int season = int.Parse(match.Groups[SeasonGroup].Value);
          int episode = int.Parse(match.Groups[EpisodeGroup].Value);
 
