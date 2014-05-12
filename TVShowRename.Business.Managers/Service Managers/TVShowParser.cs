@@ -48,17 +48,13 @@ namespace TVShowRename.Business.Managers
 
          string[] parts = Path.GetFileName(match.Groups[TitleGroup].Value).Split('.');
          string showTitle = String.Empty;
-         for (int i = 0; i < parts.Length; ++i)
+         for (int i = 0; i < parts.Length; ++i, showTitle += " ")
          {
-            showTitle += (parts[i].Length > 3) ?
-               CultureInfo.CurrentCulture.TextInfo.ToTitleCase(parts[i]) :
+            showTitle += ((parts[i].Length > 3) || (i == 0)) ?
+               CultureInfo.CurrentCulture.TextInfo.ToTitleCase(parts[i]) : // Capitalize the first letter of each word greater than 3 characters (or if it's the first word).
                parts[i].ToLower();
-
-            if ( i != (parts.Length - 1))
-            {
-               showTitle += " ";
-            }
          }
+         showTitle = showTitle.TrimEnd();
 
          int season = int.Parse(match.Groups[SeasonGroup].Value);
          int episode = int.Parse(match.Groups[EpisodeGroup].Value);
@@ -74,7 +70,7 @@ namespace TVShowRename.Business.Managers
       /// <returns>true if the filename can be parsed; otherwise, false.</returns>
       public bool CanParse(string filename)
       {
-         if ( String.IsNullOrEmpty(filename))
+         if (String.IsNullOrEmpty(filename))
          {
             throw new ArgumentException("Parameter cannot be null or empty.", "filename");
          }
