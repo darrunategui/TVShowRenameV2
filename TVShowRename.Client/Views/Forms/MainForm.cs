@@ -65,6 +65,22 @@ namespace TVShowRename.Client.Views.Forms
 
                  // TODO: show error message with unsuccessful files (show that they will be ignored).
 
+                 Dictionary<string, List<Show>> showsWithIDs = new Dictionary<string, List<Show>>();
+                 foreach (string show in successfullyParsedFiles.Keys.Cast<string>())
+                 {
+                    List<Show> showResults = await _controller.GetShowsByTitle(show);
+
+                    if (showResults.Count > 0)
+                    {
+                       showsWithIDs.Add(show, showResults);
+                    }
+                    else if (showResults.Count == 0)
+                    {
+                     // TODO: handle zero case.  I feel like an exception should be thrown in the manager so this case isn't necessary.
+                     }
+                    
+                 }
+
                  foreach (string file in droppedFiles.Where(a => !String.IsNullOrEmpty(a)))
                  {
                     // TODO: I don't like how a new window appears to select the show.

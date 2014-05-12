@@ -70,24 +70,24 @@ namespace TVShowRename.Client.Controllers
       /// <summary>
       /// Renames the file that given to this object on initialization.
       /// </summary>
-      /// <param name="show"></param>
+      /// <param name="show">The show that is to be used to retrieve episode data.</param>
       /// <exception cref="EpisodeNotFoundException">Thrown when the searched for episode cannot be found for the given show.</exception>
       internal void Rename(Show show)
       {
          ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
          // TODO: downloading episode data...
-         IEnumerable<Episode> episodes = tvdbManager.GetEpisodesByShowId(show.Id);
+         List<Episode> episodes = tvdbManager.GetEpisodesByShowId(show.Id);
 
          Episode episode = (from e in episodes
-                            where e.Season == _fileToRename.SeasonNumber &&
-                                  e.Number == _fileToRename.EpisodeNumber
+                            where e.Season == _fileToRename.Season &&
+                                  e.Number == _fileToRename.Episode
                             select e).FirstOrDefault();
          if (episode == null)
          {
             // TODO: should be some way to determine if it was successfull or not.
             // Maybe just use First() and catch the exception if nothing is found.
             throw new EpisodeNotFoundException(String.Format("Show: '{0}' did not contain information for season {1}, episode {2}",
-                                                             show.Title, _fileToRename.SeasonNumber, _fileToRename.EpisodeNumber));
+                                                             show.Title, _fileToRename.Season, _fileToRename.Episode));
          }
 
          // TODO: status - building the new filename.

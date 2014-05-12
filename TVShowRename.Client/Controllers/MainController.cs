@@ -17,60 +17,12 @@ namespace TVShowRename.Client.Controllers
 {
    public class MainController : Controller
    {
-      private const string TitleGroup = "Title";
-      private const string InfoGroup = "Info";
-
       private IMainView _view;
 
       public MainController(IMainView view)
       {
          _view = view;
          view.SetController(this);
-      }
-
-      internal async Task Rename(string file)
-      {
-         // TODO: set status text to parsing
-         SetStatus("Parsing input file.");
-         _view.VisualizeProgress(true);
-
-         // Loop through each parser and check if it can parse the input file.
-         foreach (ITVShowParser parser in _serviceFactory.GetServiceManagers<ITVShowParser>())
-         {
-            if (!parser.CanParse(file))
-            {
-               // Maybe the next parser will be able to parse the file.
-               continue;
-            }
-            else
-            {
-               SetStatus("Successful parser found.");
-               try
-               {
-                  TVShowFile tvShowFile = parser.Parse(file);
-                  ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
-
-                  SetStatus(String.Format("Searching for a show with the name '{0}'", tvShowFile.ShowName));
-                  Task<IEnumerable<Show>> showsTaskResult = tvdbManager.GetShowsByTitle(tvShowFile.ShowName);
-                  // TODO: downloading show data..
-                  // TODO: update the progress bar to look like work is being done...
-                  IEnumerable<Show> results = await showsTaskResult;
-                  // TODO: make sure the progress bar finishes
-
-                  InterpretShowResults(results, tvShowFile);
-               }
-               catch (Exception ex)
-               {
-                  // TODO: Set status text to error
-                  SetStatus(String.Format("An error occured renaming the file. {0}", ex.Message));
-                  break;
-               }
-
-               // TODO: I believe here would be the successful case so display some success message.
-               break;
-            }
-         }
-         _view.VisualizeProgress(false);
       }
 
       /// <summary>
@@ -112,6 +64,80 @@ namespace TVShowRename.Client.Controllers
       }
 
 
+      internal async Task Rename(string file)
+      {
+         // TODO: set status text to parsing
+         SetStatus("Parsing input file.");
+         _view.VisualizeProgress(true);
+
+         // Loop through each parser and check if it can parse the input file.
+         foreach (ITVShowParser parser in _serviceFactory.GetServiceManagers<ITVShowParser>())
+         {
+            if (!parser.CanParse(file))
+            {
+               // Maybe the next parser will be able to parse the file.
+               continue;
+            }
+            else
+            {
+               SetStatus("Successful parser found.");
+               try
+               {
+                  TVShowFile tvShowFile = parser.Parse(file);
+                  ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
+
+                  SetStatus(String.Format("Searching for a show with the name '{0}'", tvShowFile.ShowName));
+                  Task<List<Show>> showsTaskResult = tvdbManager.GetShowsByTitle(tvShowFile.ShowName);
+                  // TODO: downloading show data..
+                  // TODO: update the progress bar to look like work is being done...
+                  List<Show> results = await showsTaskResult;
+                  // TODO: make sure the progress bar finishes
+
+                  InterpretShowResults(results, tvShowFile);
+               }
+               catch (Exception ex)
+               {
+                  // TODO: Set status text to error
+                  SetStatus(String.Format("An error occured renaming the file. {0}", ex.Message));
+                  break;
+               }
+
+               // TODO: I believe here would be the successful case so display some success message.
+               break;
+            }
+         }
+         _view.VisualizeProgress(false);
+      }
+
+      internal async Task<List<Show>> GetShowsByTitle(string show)
+      {
+         List<Show> showResults;
+         // if the id is already saved, return the show with the ID.
+         // TODO: get the ID from a saved file.
+
+         //else
+         // Search TVDB for shows with the given name.
+         showResults = await DownloadShowsByTitle(show);
+         return showResults;
+      }
+
+      private async Task<List<Show>> DownloadShowsByTitle(string show)
+      {
+         ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
+         try
+         {
+            Task<List<Show>> searchTask = tvdbManager.GetShowsByTitle(show);
+            SetStatus(String.Format("Searching for shows with the name '{0}'", show));
+            List<Show> results = await searchTask;
+            return results;
+         }
+         catch (Exception ex)
+         {
+            SetStatus(String.Format("An error occured searching for the show '{0}'.{1}{2}", show, Environment.NewLine, ex.Message));
+            return new List<Show>();
+         }
+      }
+
       private void InterpretShowResults(IEnumerable<Show> results, TVShowFile fileToRename)
       {
          switch (results.Count())
@@ -121,7 +147,6 @@ namespace TVShowRename.Client.Controllers
                   // no results... to bad..
                   // Not sure if ths code would ever get reached.
                   throw new ShowNotFoundException(String.Format("No show with the name '{0}' was found.", fileToRename.ShowName));
-                  break;
                }
             case 1:
                {

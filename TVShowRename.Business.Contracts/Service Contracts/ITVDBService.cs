@@ -10,9 +10,9 @@ namespace TVShowRename.Business.Contracts
 {
     public interface ITVDBService : IService
     {
-        Task<IEnumerable<Show>> GetShowsByTitle(string title);
+        Task<List<Show>> GetShowsByTitle(string title);
 
-        IEnumerable<Episode> GetEpisodesByShowId(int id);
+        List<Episode> GetEpisodesByShowId(int id);
 
     }
 }

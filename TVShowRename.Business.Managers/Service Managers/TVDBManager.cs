@@ -28,7 +28,7 @@ namespace TVShowRename.Business.Managers
         /// </summary>
         private const string mirror = "http://thetvdb.com/";
 
-        public async Task<IEnumerable<Show>> GetShowsByTitle(string title)
+        public async Task<List<Show>> GetShowsByTitle(string title)
         {
             if ( String.IsNullOrEmpty(title) )
             {
@@ -83,15 +83,16 @@ namespace TVShowRename.Business.Managers
 
                     shows.Add(newShow);
                 }
+               // TODO: what happens if it's an empty list? throw ShowNotFoundException.
                 return shows;
             }
             catch (Exception ex)
             {
-                throw new InvalidOperationException("Could not parse the shows", ex);
+                throw new InvalidOperationException("Could not parse the show data.", ex);
             }
         }
 
-        public IEnumerable<Episode> GetEpisodesByShowId(int id)
+        public List<Episode> GetEpisodesByShowId(int id)
         {
             // Argument check
             if (id <= 0)
@@ -152,7 +153,7 @@ namespace TVShowRename.Business.Managers
             }
             catch(Exception ex)
             {
-                throw new InvalidOperationException("Could not parse the episodes", ex);
+                throw new InvalidOperationException("Could not parse the episode data.", ex);
             }
         }
     }

@@ -105,8 +105,8 @@ namespace TVShowRename.Business.Managers.UnitTests
          string filename = string.Format("{0}.S{1}E{2}.HDTV.mkv", _showName, seasonString, episodeString);
          TVShowFile file = _parser.Parse(filename);
 
-         Assert.AreEqual(episode, file.EpisodeNumber);
-         Assert.AreEqual(season, file.SeasonNumber);
+         Assert.AreEqual(episode, file.Episode);
+         Assert.AreEqual(season, file.Season);
          Assert.AreEqual(_showName, file.ShowName);
          Assert.AreEqual(filename, file.Filename);
       }
