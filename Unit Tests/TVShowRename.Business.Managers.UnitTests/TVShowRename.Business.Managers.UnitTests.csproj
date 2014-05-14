@@ -58,6 +58,7 @@
   <ItemGroup>
     <Compile Include="TVShowParserTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TVDBManagerTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Core.Common.Contracts\Core.Common.Contracts.csproj">
@@ -75,6 +76,10 @@
     <ProjectReference Include="..\..\TVShowRename.Business.Managers\TVShowRename.Business.Managers.csproj">
       <Project>{2102d1c9-80a1-4524-8051-378df4963ea5}</Project>
       <Name>TVShowRename.Business.Managers</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\TVShowRename.Common\TVShowRename.Common.csproj">
+      <Project>{c6b091f5-81c7-41a7-900c-92a002c8c33c}</Project>
+      <Name>TVShowRename.Common</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
