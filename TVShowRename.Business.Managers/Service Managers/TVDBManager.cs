@@ -32,7 +32,7 @@ namespace TVShowRename.Business.Managers
       {
          if (String.IsNullOrEmpty(title))
          {
-            throw new ArgumentException("The title must not be null or empty.", "title");
+            throw new ArgumentException("Parameter cannot be null or empty.", "title");
          }
 
          string address = String.Format("{0}/api/GetSeries.php?seriesname={1}&language=en", mirror, title);
@@ -54,7 +54,7 @@ namespace TVShowRename.Business.Managers
 
          if (document.Descendants(ShowFields.Series).Count() == 0)
          {
-            throw new ShowNotFoundException(String.Format("A show with the title '{0}' could not be found.", title));
+            throw new ShowNotFoundException("The show could not be found.", title);
          }
 
          try
@@ -117,7 +117,7 @@ namespace TVShowRename.Business.Managers
          // Make sure the downloaded data is valid.
          if (String.IsNullOrEmpty(xml))
          {
-            throw new ShowNotFoundException(String.Format("The show ID '{0}' did not result in any matches", id));
+            throw new WebException(String.Format("Nothing was returned by the query '{0}'", address));
          }
 
          try

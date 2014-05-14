@@ -146,7 +146,7 @@ namespace TVShowRename.Client.Controllers
                {
                   // no results... to bad..
                   // Not sure if ths code would ever get reached.
-                  throw new ShowNotFoundException(String.Format("No show with the name '{0}' was found.", fileToRename.ShowName));
+                  throw new ShowNotFoundException(String.Format("No show with the name '{0}' was found.", fileToRename.ShowName), fileToRename.ShowName);
                }
             case 1:
                {
