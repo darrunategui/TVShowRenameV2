@@ -52,7 +52,7 @@ namespace TVShowRename.Business.Managers
          try { document = XDocument.Parse(xml); }
          catch { throw; }
 
-         if (document.Descendants(ShowFields.Series).Count() == 0)
+         if (!document.Root.HasElement(ShowFields.Series))
          {
             throw new ShowNotFoundException("The show could not be found.", title);
          }
