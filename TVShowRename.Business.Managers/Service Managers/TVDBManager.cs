@@ -60,7 +60,7 @@ namespace TVShowRename.Business.Managers
          try
          {
             List<Show> shows = new List<Show>();
-            foreach (XElement show in document.Descendants(ShowFields.Series))
+            foreach (XElement show in document.Root.Elements(ShowFields.Series))
             {
                int id = (show.HasElement(ShowFields.Id)) ?
                         int.Parse(show.Element(ShowFields.Id).Value) :

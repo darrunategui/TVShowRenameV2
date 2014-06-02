@@ -52,7 +52,7 @@ namespace TVShowRename.Client.Controllers
 
                TVShowFile tvShowFile = parser.Parse(file);
 
-               // Add the file to the successfull list and remove it from the UNsuccessful list.
+               // Add the file to the successful list and remove it from the UNsuccessful list.
                if (!successfullyParsedFiles.ContainsKey(tvShowFile.ShowName))
                {
                   successfullyParsedFiles.Add(tvShowFile.ShowName, new List<TVShowFile>());
@@ -109,6 +109,10 @@ namespace TVShowRename.Client.Controllers
          _view.VisualizeProgress(false);
       }
 
+
+      /* I don't like the bubbling exceptions in the methods below.  
+       * Find a better way to do it... */
+
       internal async Task<List<Show>> GetShowsByTitle(string show)
       {
          List<Show> showResults;
@@ -117,24 +121,36 @@ namespace TVShowRename.Client.Controllers
 
          //else
          // Search TVDB for shows with the given name.
-         showResults = await DownloadShowsByTitle(show);
+         try
+         {
+            showResults = await DownloadShowsByTitle(show);
+         }
+         catch
+         {
+            throw;
+         }
+
          return showResults;
       }
 
+      /// <summary>
+      /// Downloads show data from TVDB.
+      /// </summary>
+      /// <param name="show">the name of the show to get data for.</param>
+      /// <returns>A list of shows matching the specified <paramref name="show"/>.</returns>
       private async Task<List<Show>> DownloadShowsByTitle(string show)
       {
-         ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
          try
          {
+            ITVDBService tvdbManager = _serviceFactory.GetServiceManager<ITVDBService>();
             Task<List<Show>> searchTask = tvdbManager.GetShowsByTitle(show);
             SetStatus(String.Format("Searching for shows with the name '{0}'", show));
             List<Show> results = await searchTask;
             return results;
          }
-         catch (Exception ex)
+         catch
          {
-            SetStatus(String.Format("An error occured searching for the show '{0}'.{1}{2}", show, Environment.NewLine, ex.Message));
-            return new List<Show>();
+            throw;
          }
       }
 
