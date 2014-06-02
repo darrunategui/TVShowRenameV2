@@ -112,6 +112,20 @@ namespace TVShowRename.Business.Managers.UnitTests
       }
 
       [TestMethod]
+      [ExpectedException(typeof(ArgumentException))]
+      public void Parse_null_fileName_Throws()
+      {
+         try
+         {
+            _parser.Parse(null);
+         }
+         catch (ArgumentException)
+         {
+            throw;
+         }
+      }
+
+      [TestMethod]
       [ExpectedException(typeof(InvalidOperationException))]
       public void Parse_Invalid_fileName_Throws()
       {
@@ -119,7 +133,7 @@ namespace TVShowRename.Business.Managers.UnitTests
          {
             _parser.Parse("invalid filename.");
          }
-         catch
+         catch (InvalidOperationException)
          {
             throw;
          }
