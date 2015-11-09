@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using TVShowRename.Business.Contracts;
 using TVShowRename.Business.Entities;
 
 namespace TVShowRename.Business.Managers
 {
-   [Export(typeof(ITVShowParser))]
+    [Export(typeof(ITVShowParser))]
    [PartCreationPolicy(CreationPolicy.NonShared)]
    public class TVShowParser : ITVShowParser
    {
