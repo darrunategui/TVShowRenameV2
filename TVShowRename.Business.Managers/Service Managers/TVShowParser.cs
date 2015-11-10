@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 using System.ComponentModel.Composition;
 using System.Globalization;
 using System.IO;
@@ -42,20 +43,28 @@ namespace TVShowRename.Business.Managers
 
          Match match = _showRegex.Match(filename);
 
+         // parts contains the show name in an array. i.e. [game, of, thrones]
          string[] parts = Path.GetFileName(match.Groups[TitleGroup].Value).Split('.');
-         string showTitle = String.Empty;
-         for (int i = 0; i < parts.Length; ++i, showTitle += " ")
+         StringBuilder sb = new StringBuilder();
+         // Prepare the show name as one string. Capitalize the first letters and add spaces between the words
+         for (int i = 0; i < parts.Length; ++i)
          {
-            showTitle += ((parts[i].Length > 3) || (i == 0)) ?
-               CultureInfo.CurrentCulture.TextInfo.ToTitleCase(parts[i]) : // Capitalize the first letter of each word greater than 3 characters (or if it's the first word).
-               parts[i].ToLower();
+            if ((parts[i].Length > 3) || (i == 0))
+            {
+               sb.Append(CultureInfo.CurrentCulture.TextInfo.ToTitleCase(parts[i])); // Capitalize the first letter of each word greater than 3 characters (or if it's the first word).
+            }
+            else
+            {
+               sb.Append(parts[i].ToLower());
+            }
+            sb.Append(" ");
          }
-         showTitle = showTitle.TrimEnd();
+         sb.Length--; // Trim the trailing space character;
 
          int season = int.Parse(match.Groups[SeasonGroup].Value);
          int episode = int.Parse(match.Groups[EpisodeGroup].Value);
 
-         TVShowFile show = new TVShowFile(filename, showTitle, season, episode);
+         TVShowFile show = new TVShowFile(filename, sb.ToString(), season, episode);
          return show;
       }
 

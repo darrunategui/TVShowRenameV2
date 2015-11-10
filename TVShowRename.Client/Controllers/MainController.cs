@@ -59,6 +59,7 @@ namespace TVShowRename.Client.Controllers
                }
                successfullyParsedFiles[tvShowFile.ShowName].Add(tvShowFile);
                unsuccessfullyParsedFiles.Remove(file);
+               break;
             }
          }
       }
